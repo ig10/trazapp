@@ -1,4 +1,4 @@
-class PublicController < ActionController::Base
+class PublicController < ApplicationController
 
   def index
 
