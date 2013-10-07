@@ -1,0 +1,36 @@
+<%= form_for(@tmp_group) do |f| %>
+  <% if @tmp_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tmp_group.errors.count, "error") %> prohibited this tmp_group from being saved:</h2>
+
+      <ul>
+      <% @tmp_group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nombre_proyecto %><br />
+    <%= f.text_field :nombre_proyecto %>
+  </div>
+  <div class="field">
+    <%= label_tag 'Alumno(s)' %><br />
+    <div class="user_fields">
+      <%= text_field_tag 'usuario', '',{class: 'usuario'} %>
+    </div>
+    <a href="#"><span class="button add"></span></a>
+  </div>
+  <div class="field">
+    <%= f.label :activities_hash %><br />
+    <%= f.text_area :activities_hash %>
+  </div>
+  <div class="field">
+    <%= f.label :estado %><br />
+    <%= f.text_field :estado %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

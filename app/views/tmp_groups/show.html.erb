@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre proyecto:</b>
+  <%= @tmp_group.nombre_proyecto %>
+</p>
+
+<p>
+  <b>Users hash:</b>
+  <%= @tmp_group.users_hash %>
+</p>
+
+<p>
+  <b>Activities hash:</b>
+  <%= @tmp_group.activities_hash %>
+</p>
+
+<p>
+  <b>Estado:</b>
+  <%= @tmp_group.estado %>
+</p>
+
+
+<%= link_to 'Edit', edit_tmp_group_path(@tmp_group) %> |
+<%= link_to 'Back', tmp_groups_path %>

@@ -1,0 +1,53 @@
+@import 'compass';
+
+#title{
+  font-size: 18px;
+  color: rgb(65, 38, 37);
+  font-weight: normal;
+  font-style: italic;
+  line-height: 30px;
+  text-align: center;
+}
+
+.container{
+  padding-top: 60px;
+}
+
+.container a{
+  display: inline-block;
+}
+
+.main_button{
+  margin-top: 20px;
+  margin-left: 50px;
+}
+
+.middle_button{
+  margin-top: 20px;
+  margin-left: 130px;
+}
+
+.button{
+  &.add{
+    display: inline-block;
+    width: 33px;
+    height: 31px;
+    background-image: url(bullets/plus_minus.png);
+    &:hover{}
+  }
+  &.delete{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(bullets/plus_minus.png);
+  }
+}
+
+#new_tmp_group{
+  padding: 0 10px 0 10px;
+}
+
+.ui-input-text{
+  @include border-radius(20px !important);
+  padding: 0 !important;
+}
