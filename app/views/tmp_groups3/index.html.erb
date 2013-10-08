@@ -1,0 +1,29 @@
+<h1>Listing tmp_groups</h1>
+
+<table>
+  <tr>
+    <th>Nombre proyecto</th>
+    <th>Users hash</th>
+    <th>Activities hash</th>
+    <th>Estado</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tmp_groups.each do |tmp_group| %>
+  <tr>
+    <td><%= tmp_group.nombre_proyecto %></td>
+    <td><%= tmp_group.users_hash %></td>
+    <td><%= tmp_group.activities_hash %></td>
+    <td><%= tmp_group.estado %></td>
+    <td><%= link_to 'Show', tmp_group %></td>
+    <td><%= link_to 'Edit', edit_tmp_group_path(tmp_group) %></td>
+    <td><%= link_to 'Destroy', tmp_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tmp group', new_tmp_group_path %>

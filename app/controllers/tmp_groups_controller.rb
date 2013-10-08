@@ -80,4 +80,11 @@ class TmpGroupsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def partial_alumno
+    @rut = "tmp_group[rut_usuario_#{param[:rut]}]"
+    @nombre = "tmp_group[nombre_usuario_#{param[:nombre]}]"
+    @correo = "tmp_group[correo_usuario_#{param[:correo]}]"
+    render partial: 'alumno'
+  end
 end
