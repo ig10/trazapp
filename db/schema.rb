@@ -11,27 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131006195314) do
+ActiveRecord::Schema.define(:version => 20131008162232) do
 
-  create_table "tmp_groups", :force => true do |t|
-    t.string   "nombre_proyecto"
-    t.text     "users_hash"
-    t.text     "activities_hash"
+  create_table "tmp_actividades", :force => true do |t|
+    t.integer  "proyecto_id"
+    t.string   "modulo"
+    t.string   "funcionalidad"
+    t.integer  "complejidad"
     t.string   "estado"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.date     "revision"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
-  create_table "users", :force => true do |t|
+  create_table "tmp_proyectos", :force => true do |t|
+    t.string   "nombre"
+    t.string   "estado"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "usuarios", :force => true do |t|
     t.string   "rut"
-    t.string   "nombres"
-    t.string   "apellido_paterno"
-    t.string   "apellido_materno"
-    t.integer  "carrera"
-    t.integer  "sede"
-    t.date     "fecha_inicio"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.string   "nombre_completo"
+    t.string   "correo_electronico"
+    t.integer  "proyecto_id"
+    t.string   "perfil"
+    t.string   "sede"
+    t.string   "carrera"
+    t.boolean  "activo"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
 end

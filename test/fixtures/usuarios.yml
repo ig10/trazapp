@@ -2,18 +2,18 @@
 
 one:
   rut: MyString
-  nombres: MyString
-  apellido_paterno: MyString
-  apellido_materno: MyString
-  carrera: 1
-  sede: 1
-  fecha_inicio: 2013-10-06
+  nombre_completo: MyString
+  correo_electronico: MyString
+  perfil: MyString
+  sede: MyString
+  carrera: MyString
+  activo: false
 
 two:
   rut: MyString
-  nombres: MyString
-  apellido_paterno: MyString
-  apellido_materno: MyString
-  carrera: 1
-  sede: 1
-  fecha_inicio: 2013-10-06
+  nombre_completo: MyString
+  correo_electronico: MyString
+  perfil: MyString
+  sede: MyString
+  carrera: MyString
+  activo: false

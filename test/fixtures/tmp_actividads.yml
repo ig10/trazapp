@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  proyecto_id: 1
+  modulo: MyString
+  funcionalidad: MyString
+  complejidad: 1
+  estado: MyString
+  revision: 2013-10-08
+
+two:
+  proyecto_id: 1
+  modulo: MyString
+  funcionalidad: MyString
+  complejidad: 1
+  estado: MyString
+  revision: 2013-10-08

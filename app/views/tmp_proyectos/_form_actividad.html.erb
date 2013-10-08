@@ -1,0 +1,22 @@
+<%= form_for @tmp_actividad, :html => { :class => 'form-horizontal' } do |f| %>
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>Módulo</th>
+        <th>Nombre/Funcionalidad</th>
+        <th>Complejidad</th>
+        <th>Revisión</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= f.text_field :modulo, :class => 'text_field' %></td>
+        <td><%= f.text_field :funcionalidad, :class => 'text_field' %></td>
+        <td><%= f.number_field :complejidad, :class => 'number_field' %></td>
+        <td><%= f.date_select :revision, :class => 'date_select' %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+

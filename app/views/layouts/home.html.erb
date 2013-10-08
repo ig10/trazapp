@@ -36,7 +36,7 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
+  <body id="home">
 
     <div class="navbar navbar-fluid-top">
       <div class="navbar-inner">
@@ -46,28 +46,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">TrazApp</a>
-          <div class="container-fluid nav-collapse">
-            <ul class="nav">
-              <li><%= link_to "Usuarios", usuarios_path  %></li>
-              <li><%= link_to "Proyectos", tmp_proyectos_path  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          <a class="brand" href="#">TrazApp Bienvenidos</a>
         </div>
       </div>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="span9"><%= yield %></div>
-        <div class="span3">
-          <h2>Info</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-      </div>
-    </div>
+    <%= yield %>
 
-    </div> <!-- /container -->
 
   </body>
 </html>

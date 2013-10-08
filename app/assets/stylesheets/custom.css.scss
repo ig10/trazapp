@@ -1,5 +1,12 @@
 @import 'compass';
 
+#home{
+  width: 100%;
+  height: 100%;
+  background: url(bg/main_bg.png) no-repeat 40% 30%;
+}
+
+
 #title{
   font-size: 18px;
   color: rgb(65, 38, 37);
@@ -29,16 +36,18 @@
 
 .button{
   &.add{
+    margin-top: 10px;
     display: inline-block;
     width: 33px;
-    height: 30px;
+    height: 32px;
+    background-position: 0px 1px;
     background-image: url(bullets/plus_minus.png);
-    &:hover{}
   }
   &.delete{
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 33px;
+    height: 32px;
+    background-position: -34px;
     background-image: url(bullets/plus_minus.png);
   }
 }
@@ -50,4 +59,19 @@
 .ui-input-text{
   @include border-radius(20px !important);
   padding: 0 !important;
+}
+
+.extended{
+  input{
+    margin-right: 4px;
+    margin-top: 10px;
+  }
+}
+
+.form-actions-override{
+  padding: 19px 180px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e5e5e5;
 }

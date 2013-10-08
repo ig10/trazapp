@@ -1,0 +1,46 @@
+<%- model_class = TmpActividad -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:proyecto_id) %></th>
+      <th><%= model_class.human_attribute_name(:modulo) %></th>
+      <th><%= model_class.human_attribute_name(:funcionalidad) %></th>
+      <th><%= model_class.human_attribute_name(:complejidad) %></th>
+      <th><%= model_class.human_attribute_name(:estado) %></th>
+      <th><%= model_class.human_attribute_name(:revision) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tmp_actividades.each do |tmp_actividad| %>
+      <tr>
+        <td><%= link_to tmp_actividad.id, tmp_actividad_path(tmp_actividad) %></td>
+        <td><%= tmp_actividad.proyecto_id %></td>
+        <td><%= tmp_actividad.modulo %></td>
+        <td><%= tmp_actividad.funcionalidad %></td>
+        <td><%= tmp_actividad.complejidad %></td>
+        <td><%= tmp_actividad.estado %></td>
+        <td><%= tmp_actividad.revision %></td>
+        <td><%=l tmp_actividad.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_tmp_actividad_path(tmp_actividad), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      tmp_actividad_path(tmp_actividad),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_tmp_actividad_path,
+            :class => 'btn btn-primary' %>

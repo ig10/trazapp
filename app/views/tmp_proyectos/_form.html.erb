@@ -1,0 +1,30 @@
+<%= form_for @tmp_proyecto, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :nombre, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :nombre, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label 'Alumnos(s)', :class => 'control-label' %>
+    <div class="controls alumnos">
+      <div class="user_fields">
+        <%= text_field_tag 'alumno_1[rut]', '',{placeholder:'Rut', class: 'text_field usuario'} %>
+        <%= text_field_tag 'alumno_1[nombre_completo]', '',{placeholder:'Nombre y Apellidos', class: 'text_field usuario'} %>
+        <%= text_field_tag 'alumno_1[correo_electronico]', '',{placeholder:'Correo Electrónico', class: 'text_field usuario'} %>
+      </div>
+    </div>
+    <div class="controls">
+      <a href="#" id="nuevo_alumno"><span class="button add"></span></a>
+      <a href="#" id="eliminar_alumno"><span class="button delete"></span></a>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'form_actividad' %>
+
+<div class="form-actions-override">
+  <button id="inscribir" type="button" class="btn btn-primary">Inscribir</button>
+  <%= link_to t('.cancel', :default => 'Cancelar'),
+              tmp_proyectos_path, :class => 'btn' %>
+</div>
