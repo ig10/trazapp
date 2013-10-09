@@ -24,11 +24,32 @@ ActiveRecord::Schema.define(:version => 20131008162232) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "tmp_groups", :force => true do |t|
+    t.string   "nombre_proyecto"
+    t.text     "users_hash"
+    t.text     "activities_hash"
+    t.string   "estado"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "tmp_proyectos", :force => true do |t|
     t.string   "nombre"
-    t.string   "estado"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "estado",     :default => "pendiente"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "rut"
+    t.string   "nombres"
+    t.string   "apellido_paterno"
+    t.string   "apellido_materno"
+    t.integer  "carrera"
+    t.integer  "sede"
+    t.date     "fecha_inicio"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "usuarios", :force => true do |t|

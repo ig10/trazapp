@@ -1,12 +1,11 @@
 var App = (function(){
 
   function init(){
-    $("body").on("click",".ui-dialog button", function() {
-     $("[data-role='dialog']").dialog("close");
+    $('.modal').modal({
+      keyboard: false,
+      backdrop: 'static'
     });
-    $(document).on("mobileinit", function(){
-      $.mobile.defaultPageTransition = "slide";
-    });
+    $('.modal').modal('show');
   }
 
   return {
