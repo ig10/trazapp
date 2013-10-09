@@ -22,11 +22,9 @@ test:
   timeout: 5000
 
 production:
-  adapter:pg
-  host:  ec2-54-227-239-195.compute-1.amazonaws.com
-  database:  d681cor53jaapt
-  username:  aswxqcvqigeswv
-  password: RxxGK_MfOTJvn11G1l2dZnshLH
-  port:  5432
+  adapter: postgresql
+  database: trazapp_production
+  username: trazapp
+  password: trazapp.123
   pool: 5
   timeout: 5000
