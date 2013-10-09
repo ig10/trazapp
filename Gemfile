@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.0.0p0"
 
 gem 'rails', '3.2.13'
 
@@ -28,6 +29,10 @@ end
 
 group :development do
   gem 'better_errors'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 # To use ActiveModel has_secure_password
