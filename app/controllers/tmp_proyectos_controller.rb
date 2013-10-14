@@ -32,16 +32,18 @@ class TmpProyectosController < ApplicationController
   end
 
   def create
-    @tmp_proyecto = TmpProyecto.new(params[:tmp_proyecto])
+    logger.info params[:nombre]
+    proyecto = TmpProyecto.create({nombre: params[:tmp_proyecto][:nombre]})
 
-    respond_to do |format|
-      if @tmp_proyecto.save
-        format.html { redirect_to @tmp_proyecto, notice: 'Tmp proyecto was successfully created.' }
-        format.json { render json: @tmp_proyecto, status: :created, location: @tmp_proyecto }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @tmp_proyecto.errors, status: :unprocessable_entity }
+    if proyecto.id.present?
+      users = 1
+      until params["alumno_#{users}"].nil?
+        alumno = params["alumno_#{users}"].merge({proyecto_id: proyecto.id, perfil: 'alumno'})
+        users = (Usuario.create(alumno) ? users + 1 : 0)
       end
+    else
+      flash[:notice] = "ERROR!, No se pudo crear proyecto"
+      redirect_to action: 'new'
     end
   end
 
