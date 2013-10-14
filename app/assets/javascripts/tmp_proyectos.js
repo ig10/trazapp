@@ -21,9 +21,6 @@ var TmpProyecto = (function(){
           estado = "SI";
         });
       });
-      if(estado == "SI"){
-        console.log("OK");
-      }
     });
   }
 
