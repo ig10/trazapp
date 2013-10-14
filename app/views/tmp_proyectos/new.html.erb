@@ -2,7 +2,14 @@
 <div class="page-header">
   <h1>Inscribir Proyecto</h1>
 </div>
-<%= render :partial => 'form' %>
+<%= render partial: 'form' %>
+<%= render partial: 'form_actividad' %>
+
+<div class="form-actions-override">
+  <button id="inscribir" type="button" class="btn btn-primary">Inscribir</button>
+  <%= link_to t('.cancel', :default => 'Cancelar'),
+              tmp_proyectos_path, :class => 'btn' %>
+</div>
 
 <script type="text/javascript">
   $(function(){
