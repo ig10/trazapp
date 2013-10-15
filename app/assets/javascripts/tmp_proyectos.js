@@ -12,6 +12,19 @@ var TmpProyecto = (function(){
       $('.user_fields').last().remove();
     });
 
+    $('#nueva_actividad').on('click', function(e){
+      e.preventDefault();
+      var actividad = $('.actividades_field');
+      var cantidad = (actividad.size()+1).toString();
+      var tmpl = actividad.first().clone().html().replace(/actividad_1/g,"actividad_".concat(cantidad));
+      $("<tr class='actividades_field'>"+tmpl+"</tr>").appendTo(actividad.parent());
+    });
+
+    $('#eliminar_actividad').on('click', function(e){
+      e.preventDefault();
+      $('.actividades_field').last().remove();
+    });
+
     $('#inscribir').on('click', function(e){
       e.preventDefault();
       var estado = "No entre";
