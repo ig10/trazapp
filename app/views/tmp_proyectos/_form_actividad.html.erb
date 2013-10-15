@@ -8,15 +8,22 @@
         <th>Revisión</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td><%= f.text_field :modulo, :class => 'text_field' %></td>
-        <td><%= f.text_field :funcionalidad, :class => 'text_field' %></td>
-        <td><%= f.number_field :complejidad, :class => 'number_field' %></td>
-        <td><%= f.date_select :revision, :class => 'date_select' %></td>
+    <tbody class="actividades_body">
+      <tr class="actividades_field">
+        <td><%= text_field_tag "actividad_1[modulo]",'', {class: 'text_field'} %></td>
+        <td><%= text_field_tag "actividad_1[funcionalidad]",'', {class: 'text_field funcionalidad'} %></td>
+        <td><%= select_tag "actividad_1[complejidad]",options_for_select(@complejidad), {include_blank: true, class: 'number_field complejidad'} %></td>
+        <td><%= select_day(Time.now.day, {field_name: "actividad_1[dia]"}, {class: "fecha_dia"}) %>
+          <%= select_month(Date.today, {field_name: "actividad_1[mes]", use_month_names: meses_helper}, {class: "fecha_mes"}) %>
+          <%= select_year(Date.today, {field_name: "actividad_1[anio]"}, {class: "fecha_anio"}) %>
+        </td>
       </tr>
     </tbody>
+
   </table>
 <% end %>
-
+<div class="controls">
+  <a href="#" id="nueva_actividad"><span class="button add"></span></a>
+  <a href="#" id="eliminar_actividad"><span class="button delete"></span></a>
+</div>
 
