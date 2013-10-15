@@ -20,10 +20,7 @@ class TmpProyectosController < ApplicationController
   def new
     @tmp_proyecto = TmpProyecto.new
     @tmp_actividad = TmpActividad.new
-    # respond_to do |format|
-    #   format.html # new.html.erb
-    #   format.json { render json: @tmp_proyecto }
-    # end
+    @complejidad = TmpActividad::Complejidad
     render :new, layout: 'alumno'
   end
 
@@ -32,7 +29,6 @@ class TmpProyectosController < ApplicationController
   end
 
   def create
-    logger.info params[:nombre]
     proyecto = TmpProyecto.create({nombre: params[:tmp_proyecto][:nombre]})
 
     if proyecto.id.present?
