@@ -22,18 +22,22 @@ var TmpProyecto = (function(){
 
     $('#eliminar_actividad').on('click', function(e){
       e.preventDefault();
-      $('.actividades_field').last().remove();
+      var actividades = $('.actividades_field');
+      if(actividades.size() > 1){
+        actividades.last().remove();
+      }
     });
 
     $('#inscribir').on('click', function(e){
       e.preventDefault();
-      var estado = "No entre";
-      $('form').each(function(){
-        $.post(this.action, $(this).serialize() , function(data, textStatus, xhr) {
-          console.log('ENVIADO!');
-          estado = "SI";
-        });
+      var form = $('form');
+      $.post(form.attr('action'), form.serialize(), function(data, status, xhr){
+        console.log(data, status, xhr);
+        if(data=="OK"){
+          $('.alert').show();
+        }
       });
+
     });
   }
 
