@@ -7,5 +7,6 @@ Trazapp::Application.routes.draw do
 
   match '/alumnos' => 'tmp_proyectos#new'
   match '/profesor' => 'tmp_proyectos#index'
+  match '/tmp_proyectos' => 'tmp_proyectos#create'
 
 end
