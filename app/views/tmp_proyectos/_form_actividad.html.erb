@@ -1,28 +1,27 @@
-<%= form_for @tmp_actividad, :html => { :class => 'form-horizontal' } do |f| %>
-  <table class="table table-striped table-responsive">
-    <thead>
-      <tr>
-        <th>Módulo</th>
-        <th>Nombre/Funcionalidad</th>
-        <th>Complejidad</th>
-        <th>Revisión</th>
-      </tr>
-    </thead>
-    <tbody class="actividades_body">
-      <tr class="actividades_field">
-        <td><%= text_field_tag "actividad_1[modulo]",'', {class: 'text_field'} %></td>
-        <td><%= text_field_tag "actividad_1[funcionalidad]",'', {class: 'text_field funcionalidad'} %></td>
-        <td><%= select_tag "actividad_1[complejidad]",options_for_select(@complejidad), {include_blank: true, class: 'number_field complejidad'} %></td>
-        <td><%= select_day(Time.now.day, {field_name: "actividad_1[dia]"}, {class: "fecha_dia"}) %>
-          <%= select_month(Date.today, {field_name: "actividad_1[mes]", use_month_names: meses_helper}, {class: "fecha_mes"}) %>
-          <%= select_year(Date.today, {field_name: "actividad_1[anio]"}, {class: "fecha_anio"}) %>
-        </td>
-      </tr>
-    </tbody>
+<table class="table table-striped table-responsive">
+  <thead>
+    <tr>
+      <th>Módulo</th>
+      <th>Nombre/Funcionalidad</th>
+      <th>Complejidad</th>
+      <th>Revisión</th>
+    </tr>
+  </thead>
+  <tbody class="actividades_body">
+    <tr class="actividades_field">
+      <td><%= text_field_tag "actividad_1[modulo]",'', {class: 'text_field'} %></td>
+      <td><%= text_field_tag "actividad_1[funcionalidad]",'', {class: 'text_field funcionalidad'} %></td>
+      <td><%= select_tag "actividad_1[complejidad]",options_for_select(@complejidad), {include_blank: true, class: 'number_field complejidad'} %></td>
+      <td>
+        <%= select_tag 'actividad_1[dia]', options_for_select(1..31,Time.now.day), {class: "fecha_dia"} %>
+        <%= select_tag 'actividad_1[mes]', options_for_select(meses_helper,Time.now.month), {class: "fecha_mes"} %>
+        <%= select_tag 'actividad_1[anio]', options_for_select(anio_helper,Time.now.year), {class: "fecha_anio"} %>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  </table>
-<% end %>
-<div class="controls">
+<div class="control_actividades">
   <a href="#" id="nueva_actividad"><span class="button add"></span></a>
   <a href="#" id="eliminar_actividad"><span class="button delete"></span></a>
 </div>
