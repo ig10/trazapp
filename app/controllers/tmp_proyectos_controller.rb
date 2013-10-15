@@ -37,6 +37,14 @@ class TmpProyectosController < ApplicationController
         alumno = params["alumno_#{users}"].merge({proyecto_id: proyecto.id, perfil: 'alumno'})
         users = (Usuario.create(alumno) ? users + 1 : 0)
       end
+
+      actividades = 1
+      until params["actividad_#{actividades}"].nil?
+        actividad = params["actividad_#{actividades}"].merge({proyecto_id: proyecto.id})
+        actividades = (TmpActividad.create(actividad) ? actividades + 1 : 0)
+      end
+
+      render text: 'OK'
     else
       flash[:notice] = "ERROR!, No se pudo crear proyecto"
       redirect_to action: 'new'
