@@ -1,4 +1,4 @@
-class TmpActividadsController < ApplicationController
+class TmpActividadesController < ApplicationController
   # GET /tmp_actividades
   # GET /tmp_actividades.json
   def index
