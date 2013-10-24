@@ -26,6 +26,10 @@ class TmpProyectosController < ApplicationController
 
   def edit
     @tmp_proyecto = TmpProyecto.find(params[:id])
+    @actividades = @tmp_proyecto.actividades
+    @alumnos = @tmp_proyecto.alumnos
+    @complejidad = TmpActividad::Complejidad
+    render :edit, layout: 'alumno' #validar session para layout
   end
 
   def create
