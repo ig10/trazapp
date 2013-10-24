@@ -1,5 +1,25 @@
 <%- model_class = TmpProyecto -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
+<div class="container">
+  <div class="alert hide fade in out alert-success">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>OK</strong> Registros modificados exitosamente
+  </div>
+  <div class="page-header">
+    <h1>Editar Proyecto</h1>
+  </div>
+  <div class="forms_proyecto">
+    <%= render partial: 'form' %>
+  </div>
+
+  <div class="form-actions-override">
+    <button id="inscribir" type="button" class="btn btn-primary">Editar</button>
+    <%= link_to t('.cancel', :default => 'Cancelar'),
+                tmp_proyectos_path, :class => 'btn' %>
+  </div>
 </div>
-<%= render :partial => 'form' %>
+
+<script type="text/javascript">
+  $(function(){
+    TmpProyecto.init();
+  });
+</script>
