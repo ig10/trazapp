@@ -20,8 +20,7 @@
         <td><%= tmp_proyecto.estado %></td>
         <td><%=l tmp_proyecto.created_at %></td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_tmp_proyecto_path(tmp_proyecto), :class => 'btn btn-mini' %>
+          <%= link_to "Editar", "/proyecto/editar/#{tmp_proyecto.id}", {class: "btn btn-mini"} %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       tmp_proyecto_path(tmp_proyecto),
                       :method => :delete,
