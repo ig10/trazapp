@@ -56,17 +56,7 @@ class TmpProyectosController < ApplicationController
   end
 
   def update
-    @tmp_proyecto = TmpProyecto.find(params[:id])
-
-    respond_to do |format|
-      if @tmp_proyecto.update_attributes(params[:tmp_proyecto])
-        format.html { redirect_to @tmp_proyecto, notice: 'Tmp proyecto was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @tmp_proyecto.errors, status: :unprocessable_entity }
-      end
-    end
+    render text: "UPDATE!\n#{params.inspect}"
   end
 
   def destroy
