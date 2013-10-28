@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody class="actividades_body">
-    <% if @actividades.any? %>
+    <% if Array(@actividades).any? %>
       <% @actividades.each_with_index do |actividad, i| %>
         <tr class="actividades_field">
           <td><%= text_field_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %></td>
