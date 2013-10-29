@@ -37,9 +37,55 @@ var TmpProyecto = (function(){
           $('.alert').show();
         }
       });
+    });
 
+    $('a').on('click', function(e){
+      if($(this).attr('href') == "#"){
+        e.preventDefault();
+      }
     });
   }
 
-  return {init:init};
+  function profesor(){
+    $('a').on('click', function(e){
+      if($(this).attr('href') == "#"){
+        e.preventDefault();
+      }
+    });
+
+    $('.checkbox').on('change', function(){
+      $('.cant_proyectos').text($('.checkbox:checked').size());
+    });
+
+    $('.aprobar').on('click', function(e){
+      aprobar_proyecto($(this));
+    });
+
+    $('.aprobar_multiples').on('click', function(e){
+      $('.checkbox:checked').each(function(element){
+        var botonAprobar = $(element).parent().siblings().find('.aprobar');
+        aprobar_proyecto(botonAprobar);
+      });
+    });
+
+    function aprobar_proyecto(element){
+      var boton = $(elem);
+      var id = boton.data('id').toString();
+      var codigo = boton.parent().prev().text();
+      if(!boton.hasClass('disabled')){
+        $.post("solicitud/aprobar/"+id+"/"+codigo, function(data, status, xhr){
+          if(data == "OK"){
+            boton.addClass('disabled');
+            $(boton.parent().siblings()[2]).text('aprobado');
+          }else{
+            boton.addClass('btn-warning').removeClass('btn-success');
+            console.log(data, status, xhr);
+          }
+        });
+      }
+    }
+
+  }
+
+  return {init:init, profesor:profesor};
 })();
