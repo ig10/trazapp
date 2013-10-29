@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008162232) do
+ActiveRecord::Schema.define(:version => 20131029164311) do
+
+  create_table "actividades", :force => true do |t|
+    t.integer  "proyecto_id"
+    t.string   "modulo"
+    t.string   "funcionalidad"
+    t.integer  "complejidad"
+    t.string   "estado"
+    t.date     "revision"
+    t.float    "progreso"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "proyectos", :force => true do |t|
+    t.string   "nombre"
+    t.string   "estado",       :default => "activo"
+    t.date     "fecha_cierre"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
 
   create_table "tmp_actividades", :force => true do |t|
     t.integer  "proyecto_id"
