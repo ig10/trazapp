@@ -1,0 +1,62 @@
+<%- model_class = Proyecto -%>
+<div class="page-header">
+  <h1>Proyectos</h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Estado</th>
+      <th>Fecha creación</th>
+      <th>Fecha expiración</th>
+      <th>Código</th>
+      <th>Acciones</th>
+      <th>Selección</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @proyectos.each_with_index do |proyecto, index| %>
+      <tr>
+        <td><%= index+1 %></td>
+        <td><%= proyecto.nombre %></td>
+        <td><%= proyecto.estado %></td>
+        <td><%= proyecto.created_at.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+        <td><%= proyecto.fecha_cierre.strftime('%d/%m/%Y') %></td>
+        <td><%= proyecto.codigo_acceso %></td>
+        <td>
+          <%= link_to "Editar", "/proyecto/editar/#{proyecto.id}/#{proyecto.codigo_acceso}", {class: "btn btn-mini"} %>
+          <%= link_to 'Eliminar', "/proyecto/eliminar/#{proyecto.id}/#{proyecto.codigo_acceso}" , data: { confirm: '¿Estás seguro?'},
+                      class: 'btn btn-mini btn-danger' %>
+          |
+          <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-mini btn-info"} %>
+        </td>
+        <td><%= check_box_tag "chk_proyecto_#{index}", proyecto.id, false, {class: 'checkbox centered'} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="well well-small pull-right">
+  <%= link_to 'Nuevo', '/proyecto/nuevo', :class => 'btn btn-primary' %>
+
+  <div class="btn-group">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown">
+        Seleccionados <span class="badge cant_proyectos">0</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#"><span class="icon-remove"></span> Eliminar</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    TmpProyecto.profesor();
+  });
+</script>
+
+
