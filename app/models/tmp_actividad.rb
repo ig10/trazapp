@@ -1,5 +1,5 @@
 class TmpActividad < ActiveRecord::Base
-  belongs_to :proyecto, :class_name => 'TmpProyecto', :foreign_key => 'proyecto_id'
+  belongs_to :proyecto, :class_name => 'TmpProyecto', :foreign_key => 'proyecto_id', dependent: :destroy
   attr_accessible :complejidad, :estado, :funcionalidad, :modulo, :proyecto_id, :revision, :dia, :mes, :anio
   attr_accessor :dia, :mes, :anio
 
