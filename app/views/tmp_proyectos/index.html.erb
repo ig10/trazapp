@@ -1,37 +1,76 @@
 <%- model_class = TmpProyecto -%>
 <div class="page-header">
-  <h1>Proyectos</h1>
+  <h1>Solicitudes de Proyecto</h1>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:nombre) %></th>
-      <th><%= model_class.human_attribute_name(:estado) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Estado</th>
+      <th>Fecha creación</th>
+      <th>Fecha expiración</th>
+      <th>Código</th>
+      <th>Acciones</th>
+      <th>Selección</th>
     </tr>
   </thead>
   <tbody>
-    <% @tmp_proyectos.each do |tmp_proyecto| %>
+    <% @tmp_proyectos.each_with_index do |tmp_proyecto, index| %>
       <tr>
-        <td><%= link_to tmp_proyecto.id, tmp_proyecto_path(tmp_proyecto) %></td>
+        <td><%= index+1 %></td>
         <td><%= tmp_proyecto.nombre %></td>
         <td><%= tmp_proyecto.estado %></td>
-        <td><%=l tmp_proyecto.created_at %></td>
-        <td>
-          <%= link_to "Editar", "/proyecto/editar/#{tmp_proyecto.id}", {class: "btn btn-mini"} %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      tmp_proyecto_path(tmp_proyecto),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-        </td>
+        <td><%= tmp_proyecto.created_at.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+        <td><%= tmp_proyecto.fecha_expiracion.strftime('%d/%m/%Y') %></td>
+        <td><%= tmp_proyecto.codigo_acceso %></td>
+        <% if tmp_proyecto.estado.eql?('aprobado')%>
+          <td>
+            <%= link_to "Editar", '#', {class: "btn btn-mini disabled"} %>
+            <%= link_to 'Eliminar', "/solicitud/eliminar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}" ,
+                        data: {confirm: '¿Estás seguro?'}, class: 'btn btn-mini btn-danger' %>
+            <%= link_to "Aprobar", '#', {class: "btn btn-mini btn-success disabled"} %>
+            |
+            <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-mini btn-info"} %>
+          </td>
+          <td><%= check_box_tag "chk_proyecto_#{index}", tmp_proyecto.id, false, {disabled: true ,class: 'checkbox centered'} %></td>
+        <% else %>
+          <td>
+            <%= link_to "Editar", "/solicitud/editar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}", {class: "btn btn-mini"} %>
+            <%= link_to 'Eliminar', "/solicitud/eliminar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}" ,
+                        data: {confirm: '¿Estás seguro?'}, class: 'btn btn-mini btn-danger' %>
+            <%= link_to "Aprobar", '#', {'data-id' => tmp_proyecto.id, class: "btn btn-mini btn-success aprobar"} %>
+            |
+            <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-mini btn-info"} %>
+          </td>
+          <td><%= check_box_tag "chk_proyecto_#{index}", tmp_proyecto.id, false, {class: 'checkbox centered'} %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_tmp_proyecto_path,
-            :class => 'btn btn-primary' %>
+<div class="well well-small pull-right">
+  <%= link_to 'Nuevo', '/solicitud/nuevo', :class => 'btn btn-primary' %>
+
+  <div class="btn-group">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown">
+        Seleccionados <span class="badge cant_proyectos">0</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="aprobar_multiples"><span class="icon-ok"></span> Aprobar</a></li>
+        <li><a href="#"><span class="icon-remove"></span> Eliminar</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    TmpProyecto.profesor();
+  });
+</script>
+
+
