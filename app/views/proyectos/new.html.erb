@@ -1,0 +1,25 @@
+<%- model_class = TmpProyecto -%>
+<div class="container">
+  <div class="alert hide fade in out alert-success">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>OK</strong> Registros agregados exitosamente
+  </div>
+  <div class="page-header">
+    <h1>Inscribir Proyecto</h1>
+  </div>
+  <div class="forms_proyecto">
+    <%= render partial: 'form' %>
+  </div>
+
+  <div class="form-actions-override">
+    <button id="inscribir" type="button" class="btn btn-primary">Inscribir</button>
+    <%= link_to t('.cancel', :default => 'Cancelar'),
+                tmp_proyectos_path, :class => 'btn' %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    TmpProyecto.init();
+  });
+</script>

@@ -26,10 +26,15 @@ class TmpProyectosController < ApplicationController
 
   def edit
     @tmp_proyecto = TmpProyecto.find(params[:id])
-    @actividades = @tmp_proyecto.actividades
-    @alumnos = @tmp_proyecto.alumnos
-    @complejidad = TmpActividad::Complejidad
-    render :edit, layout: 'alumno' #validar session para layout
+    if @tmp_proyecto and @tmp_proyecto.codigo_acceso.eql?(params[:codigo_acceso])
+      @actividades = @tmp_proyecto.actividades
+      @alumnos = @tmp_proyecto.alumnos
+      @complejidad = TmpActividad::Complejidad
+      render :edit, layout: 'alumno' #validar session para layout
+    else
+      flash[:error] = "Proyecto no encontrado"
+      redirect_to '/solicitudes'
+    end
   end
 
   def create
@@ -38,7 +43,7 @@ class TmpProyectosController < ApplicationController
     if proyecto.id.present?
       users = 1
       until params["alumno_#{users}"].nil?
-        alumno = params["alumno_#{users}"].merge({proyecto_id: proyecto.id, perfil: 'alumno'})
+        alumno = params["alumno_#{users}"].merge({proyecto_id: proyecto.id, perfil: 'alumno', activo: false})
         users = (Usuario.create(alumno) ? users + 1 : 0)
       end
 
@@ -48,7 +53,7 @@ class TmpProyectosController < ApplicationController
         actividades = (TmpActividad.create(actividad) ? actividades + 1 : 0)
       end
 
-      render text: 'OK'
+      render text: 'OK' #devolver codigo de acceso
     else
       flash[:notice] = "ERROR!, No se pudo crear proyecto"
       redirect_to action: 'new'
@@ -64,8 +69,40 @@ class TmpProyectosController < ApplicationController
     @tmp_proyecto.destroy
 
     respond_to do |format|
-      format.html { redirect_to tmp_proyectos_url }
+      format.html { redirect_to '/solicitudes' }
       format.json { head :no_content }
     end
   end
+
+  def aprobar
+    #Funcion pasarla a worker cuando se implemente
+    tmpProyecto = TmpProyecto.find(params[:id])
+    if tmpProyecto.codigo_acceso.eql?(params[:codigo_acceso])
+      proyecto = Proyecto.find_or_create_by_nombre(tmpProyecto.nombre)
+
+      tmpProyecto.alumnos.each do |alumno|
+        alumno.update_attributes({proyecto_id: proyecto.id, activo: true})
+      end
+
+      actividades = 0
+      if proyecto.alumnos.any? and proyecto.actividades.empty?
+        tmpProyecto.actividades.each do |tmp_act|
+          act = Actividad.new
+          act.proyecto = proyecto
+          act.modulo = tmp_act.modulo
+          act.funcionalidad = tmp_act.funcionalidad
+          act.complejidad = tmp_act.complejidad
+          act.estado = 'incompleta'
+          act.revision = tmp_act.revision
+          act.progreso = 0.0
+          actividades += 1 if act.save
+        end
+        tmpProyecto.update_attribute(:estado,'aprobado') if actividades > 0
+      end
+      render text: tmpProyecto.estado.eql?('aprobado') ? "OK" : "ERROR"
+    else
+      render text: "ERROR AL ENCONTRAR PROYECTO"
+    end
+  end
+
 end

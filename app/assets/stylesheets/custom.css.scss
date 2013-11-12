@@ -110,3 +110,14 @@
     width: 300px;
   }
 }
+
+.checkbox{
+  &.centered{
+    margin-left: 28px;
+  }
+}
+
+.cant_proyectos{
+  color: grey;
+  background-color: white;
+}

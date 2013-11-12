@@ -1,6 +1,6 @@
-class TmpActividad < ActiveRecord::Base
-  belongs_to :proyecto, :class_name => 'TmpProyecto', :foreign_key => 'proyecto_id', dependent: :destroy
-  attr_accessible :complejidad, :estado, :funcionalidad, :modulo, :proyecto_id, :revision, :dia, :mes, :anio
+class Actividad < ActiveRecord::Base
+  belongs_to :proyecto, :class_name => 'Proyecto', :foreign_key => 'proyecto_id'
+  attr_accessible :complejidad, :estado, :funcionalidad, :modulo, :progreso, :proyecto_id, :revision, :dia, :mes, :anio
   attr_accessor :dia, :mes, :anio
 
   before_create :formatear_fecha
@@ -14,6 +14,4 @@ class TmpActividad < ActiveRecord::Base
       logger.error "\033[31m FORMATTING DATE ERROR! \033[0m"
     end
   end
-
-
 end
