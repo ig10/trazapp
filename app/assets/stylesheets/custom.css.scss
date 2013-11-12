@@ -80,8 +80,12 @@
   border-top: 1px solid #e5e5e5;
 }
 
-.forms_proyecto{
+.contenedor_interno{
   padding: 0 100px;
+}
+
+.forms_proyecto{
+  @extend .contenedor_interno;
 
   table{
     th{
@@ -89,19 +93,6 @@
     }
     border: 1px solid #dddddd;
   }
-
-  .fecha_dia{
-    width: 55px;
-  }
-
-  .fecha_mes{
-    width: 115px;
-  }
-
-  .fecha_anio{
-    width: 75px;
-  }
-
   .complejidad{
     width: 95px;
   }
@@ -109,6 +100,18 @@
   .funcionalidad{
     width: 300px;
   }
+}
+
+.fecha_dia{
+  width: 55px;
+}
+
+.fecha_mes{
+  width: 115px;
+}
+
+.fecha_anio{
+  width: 75px;
 }
 
 .checkbox{
@@ -120,4 +123,52 @@
 .cant_proyectos{
   color: grey;
   background-color: white;
+}
+
+.actividades{
+  height: 20px;
+  padding: 7px 5px 7px 5px;
+  border: 1px solid #dddddd;
+  div{
+    font-weight: bold;
+    text-align: center;
+  }
+  .div1{width: 24.9%;}
+  .div2{width: 34.7%;}
+  .div3{width: 11.7%;}
+  .div4{width: 28.6%;}
+}
+
+.detalle{
+  @extend .actividades;
+  border-top: none;
+  padding: 5px;
+  height: 40px;
+  &.odd{
+    background-color: #f9f9f9;
+  }
+  @for $i from 1 through 9{
+    .span#{$i}{
+      padding-top: 9px;
+    }
+  }
+}
+
+
+// Own Responsive styles
+@media screen and (max-width: 780px){
+  .actividades{
+    height: initial;
+    div{
+      height: 0%;
+    }
+  }
+  .detalle{
+    height: initial;
+    @for $i from 1 through 9{
+      .span#{$i}{
+        padding-top: 13px;
+      }
+    }
+  }
 }
