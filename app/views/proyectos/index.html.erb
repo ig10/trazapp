@@ -9,7 +9,7 @@
       <th>Nombre</th>
       <th>Estado</th>
       <th>Fecha creación</th>
-      <th>Fecha expiración</th>
+      <th>Fecha cierre</th>
       <th>Código</th>
       <th>Acciones</th>
       <th>Selección</th>
@@ -25,7 +25,7 @@
         <td><%= proyecto.fecha_cierre.strftime('%d/%m/%Y') %></td>
         <td><%= proyecto.codigo_acceso %></td>
         <td>
-          <%= link_to "Editar", "/proyecto/editar/#{proyecto.id}/#{proyecto.codigo_acceso}", {class: "btn btn-mini"} %>
+          <%= link_to "Ver/Editar", "/proyecto/editar/#{proyecto.id}/#{proyecto.codigo_acceso}", {class: "btn btn-mini"} %>
           <%= link_to 'Eliminar', "/proyecto/eliminar/#{proyecto.id}/#{proyecto.codigo_acceso}" , data: { confirm: '¿Estás seguro?'},
                       class: 'btn btn-mini btn-danger' %>
           |
