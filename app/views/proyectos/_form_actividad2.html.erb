@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <h3>Actividades</h3>
+  <div class="row-fluid actividades">
+    <div class="span3">Módulo</div>
+    <div class="span4">Progreso</div>
+    <div class="span4">Acciones</div>
+  </div>
+
+  <% if Array(@actividades).any? %>
+    <% @actividades.each_with_index do |actividad, i| %>
+      <div class="row-fluid detalle <%= cycle('odd', 'even') -%>">
+        <div class="span3">
+          <%= label_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %>
+        </div>
+        <div class="span4">
+          <div class="progress progress-striped active">
+            <% act = actividad.progreso[:completo]%>
+            <div class="bar" style="width: <%= act %>%;"><%= act %>%</div>
+          </div>
+
+        </div>
+        <div class="span4">
+          <%= link_to "Ver/Editar", url_to_actividad(actividad), {class: "btn btn-mini"} %>
+          <%= link_to 'Eliminar', url_to_actividad(actividad, '/eliminar') , data: { confirm: '¿Estás seguro?'},
+                      class: 'btn btn-mini btn-danger' %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    NUEVA ACT! (In Progress...)
+    <a href="#" id="nueva_actividad"><span class="button add"></span></a>
+  <% end %>
+</div>
+<!-- <div class="control_actividades">
+  <a href="#" id="nueva_actividad"><span class="button add"></span></a>
+  <a href="#" id="eliminar_actividad"><span class="button delete"></span></a>
+</div>
+ -->
