@@ -3,6 +3,7 @@ Trazapp::Application.routes.draw do
   resources :tmp_proyectos
   resources :proyectos
   resources :usuarios
+  resources :actividades
 
   root to: 'public#index'
 
@@ -28,7 +29,12 @@ Trazapp::Application.routes.draw do
   scope 'proyecto' do
     match 'nuevo' => 'proyectos#new'
     match 'editar/:id/:codigo_acceso' => 'proyectos#edit'
-    match 'eliminar/:id' => 'proyectos#destroy'
+    match 'eliminar/:id/:codigo_acceso' => 'proyectos#destroy'
+    scope 'actividad' do
+      match ':id/:codigo_acceso/:actividad' => 'actividades#index'
+      match 'eliminar/:id/:codigo_acceso/:actividad' => 'actividades#destroy'
+      match ':id/:codigo_acceso/nueva-tarea/:actividad' => 'actividades#nueva_tarea'
+    end
   end
 
   #Enviar Mail Codigo Acceso
