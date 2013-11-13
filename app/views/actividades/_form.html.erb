@@ -1,0 +1,48 @@
+<%= form_for @actividad, html: { method: 'POST', class: 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= label_tag :modulo,'Módulo', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :modulo, class: 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag :funcionalidad,'Nombre/Funcionalidad', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :funcionalidad, class: 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag :complejidad,'Complejidad', class: 'control-label' %>
+    <div class="controls">
+      <%= f.select :complejidad, @complejidad, class: '' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag :estado,'Estado', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :estado, class: 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag :revision,'Revisión', class: 'control-label' %>
+    <div class="controls">
+      <%= f.select :revision, options_for_select(1..31, @actividad.revision.day),{},{class: 'fecha_dia'} %>
+      <%= f.select :revision, options_for_select(meses_helper, @actividad.revision.month),{},{class: 'fecha_mes'} %>
+      <%= f.select :revision, options_for_select(anio_helper, @actividad.revision.year),{},{class: 'fecha_anio'} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag :progreso,'Progreso (Completado)', class: 'control-label' %>
+    <div class="controls">
+      <div class="progress progress-striped active">
+        <% act = @actividad.progreso[:completo]%>
+        <div class="bar" style="width: <%= act %>%;"><b> <%= act %>%</b></div>
+      </div>
+    </div>
+  </div>
+<% end %>
