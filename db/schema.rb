@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131112225053) do
+ActiveRecord::Schema.define(:version => 20131113011844) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "proyecto_id"
@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(:version => 20131112225053) do
     t.integer  "actividad_id"
     t.text     "descripcion"
     t.date     "revision"
-    t.string   "estado"
-    t.float    "evaluacion"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "estado",       :default => "incompleta"
+    t.float    "evaluacion",   :default => 0.0
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   create_table "tmp_actividades", :force => true do |t|
@@ -54,12 +54,34 @@ ActiveRecord::Schema.define(:version => 20131112225053) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "tmp_groups", :force => true do |t|
+    t.string   "nombre_proyecto"
+    t.text     "users_hash"
+    t.text     "activities_hash"
+    t.string   "estado"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "tmp_proyectos", :force => true do |t|
     t.string   "nombre"
-    t.string   "estado"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "estado",           :default => "pendiente"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.date     "fecha_expiracion"
     t.date     "expire_date"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "rut"
+    t.string   "nombres"
+    t.string   "apellido_paterno"
+    t.string   "apellido_materno"
+    t.integer  "carrera"
+    t.integer  "sede"
+    t.date     "fecha_inicio"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "usuarios", :force => true do |t|

@@ -154,6 +154,15 @@
   }
 }
 
+form{
+  .text_area{
+    width: 50%;
+  }
+}
+
+#form_tarea{
+  display: none;
+}
 
 // Own Responsive styles
 @media screen and (max-width: 780px){

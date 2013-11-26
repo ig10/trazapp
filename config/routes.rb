@@ -4,6 +4,7 @@ Trazapp::Application.routes.draw do
   resources :proyectos
   resources :usuarios
   resources :actividades
+  resources :tareas
 
   root to: 'public#index'
 
