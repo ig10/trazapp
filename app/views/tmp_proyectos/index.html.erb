@@ -22,7 +22,7 @@
         <td><%= tmp_proyecto.nombre %></td>
         <td><%= tmp_proyecto.estado %></td>
         <td><%= tmp_proyecto.created_at.strftime('%d/%m/%Y - %H:%M:%S') %></td>
-        <td><%= tmp_proyecto.expire_date.strftime('%d/%m/%Y') %></td>
+        <td><%= tmp_proyecto.fecha_expiracion.strftime('%d/%m/%Y') %></td>
         <td><%= tmp_proyecto.codigo_acceso %></td>
         <% if tmp_proyecto.estado.eql?('aprobado')%>
           <td>

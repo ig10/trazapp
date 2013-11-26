@@ -1,5 +1,13 @@
-<div class="row-fluid">
-  <% @tareas.each do |tarea| %>
-    <!-- TODO -->
+<div class="row-fluid listado_tareas">
+  <div class="span9">
+  </div>
+  <% @tareas.each_with_index do |tarea, index| %>
+    <div class="span9 tarea">
+      <span class="span1"> <%= index+1 %> </span>
+      <span class="span2"> <%= tarea.estado %> </span>
+      <span class="span3"> <%= tarea.revision.strftime("%d/%m/%Y") %> </span>
+      <span class="span2"> <%= tarea.evaluacion %> </span>
+      <span class="span1"> <i class="icon-chevron-down tarea_detalle"></i> </span>
+    </div>
   <% end %>
 </div>

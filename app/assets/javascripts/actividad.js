@@ -27,7 +27,25 @@ var Actividad = (function(){
     });
   }
 
+  function guardar_tarea(){
+    var form = $('#new_tarea');
+    var contenedor = $('#form_tarea');
+    form.on('submit', function(e){
+      e.preventDefault();
+      $.post(form.attr('action'), form.serialize(), function(data){
+        console.log(data);
+        if(data == "OK"){
+          contenedor.hide('slow');
+          contenedor.html(false);
+        }else{
+          console.log("ERROR!!");
+        }
+      });
+    });
+  }
+
   return {
-    init: init
+    init: init,
+    guardar_tarea: guardar_tarea
   };
 })();
