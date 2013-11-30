@@ -8,7 +8,9 @@
   <div class="contenedor_interno">
     <h3>Tareas</h3>
     <% if @tareas.any? %>
-      <%= render partial: 'tareas' %>
+      <div id="listado_tareas">
+        <%= render partial: 'tareas' %>
+      </div>
     <% else %>
       <div class="alert alert-info">
         <i><b> No hay ninguna Tarea creada </b></i>
@@ -29,6 +31,6 @@
 
 <script>
   $(function(){
-  Actividad.init();
+    Actividad.init();
   });
 </script>

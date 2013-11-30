@@ -16,6 +16,8 @@ Trazapp::Application.routes.draw do
 
   match '/solicitudes' => 'tmp_proyectos#index'
   match '/activos' => 'proyectos#index'
+  match '/reportes' => 'reportes#index'
+  match '/reporte_general' => 'reportes#reporte_general'
 
   match '/tmp_proyectos' => 'tmp_proyectos#create'
   match '/tmp_proyectos/:id' => 'tmp_proyectos#update'

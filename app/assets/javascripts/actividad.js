@@ -5,6 +5,11 @@ var Actividad = (function(){
     // cerrar_tarea();
   }
 
+  function nueva_tarea(){
+    cerrar_tarea();
+    guardar_tarea();
+  }
+
   function agregar_tarea(){
     var boton = $('#agregar_tarea');
     var contenedor = $('#form_tarea');
@@ -21,8 +26,9 @@ var Actividad = (function(){
   function cerrar_tarea(){
     var boton = $('.cerrar_tarea');
     var contenedor = $('#form_tarea');
-    contenedor.on('click', boton, function(e){
+    boton.on('click', function(e){
       e.preventDefault();
+      contenedor.hide('slow');
       contenedor.html(false);
     });
   }
@@ -32,11 +38,11 @@ var Actividad = (function(){
     var contenedor = $('#form_tarea');
     form.on('submit', function(e){
       e.preventDefault();
-      $.post(form.attr('action'), form.serialize(), function(data){
-        console.log(data);
-        if(data == "OK"){
-          contenedor.hide('slow');
-          contenedor.html(false);
+      $.post(form.attr('action'), form.serialize(), function(data, status, xhr){
+        console.log(xhr);
+        if(xhr.status == 200){
+          $('.cerrar_tarea').click();
+          $('#listado_tareas').html(data);
         }else{
           console.log("ERROR!!");
         }
@@ -46,6 +52,6 @@ var Actividad = (function(){
 
   return {
     init: init,
-    guardar_tarea: guardar_tarea
+    nueva_tarea: nueva_tarea
   };
 })();

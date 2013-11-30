@@ -4,8 +4,14 @@ class Tarea < ActiveRecord::Base
 
   before_create :setear_revision
 
+  scope :completas, where(estado: 'completa')
+
   def setear_revision
     self.revision = self.actividad.revision
+  end
+
+  def completa?
+    estado == 'completa'
   end
 
 

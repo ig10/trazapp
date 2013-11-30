@@ -21,8 +21,12 @@ class ActividadesController < ApplicationController
     @tarea = Tarea.new(actividad_id: params[:actividad])
     if request.put?
       @tarea.descripcion = params[:tarea][:descripcion]
-      msg = @tarea.save ? "OK" : "ERROR"
-      render text: msg
+      if @tarea.save
+        @tareas = Tarea.where(actividad_id: params[:actividad])
+        render partial: 'tareas'
+      else
+        render status: 500
+      end
     else
       render partial: 'nueva_tarea'
     end

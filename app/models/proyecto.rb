@@ -7,6 +7,8 @@ class Proyecto < ActiveRecord::Base
   attr_accessible :estado, :fecha_cierre, :nombre
   before_save :establecer_cierre
 
+  ESTADOS = {"Activo" => "activo", "Inactivo" => "inactivo", "Expirado" => "expirado", "Evaluado" => "evaluado"}
+
   def formatear_nombre
     self.nombre = self.nombre.titleize
   end
