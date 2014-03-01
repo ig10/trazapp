@@ -54,15 +54,6 @@ ActiveRecord::Schema.define(:version => 20131113011844) do
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "tmp_groups", :force => true do |t|
-    t.string   "nombre_proyecto"
-    t.text     "users_hash"
-    t.text     "activities_hash"
-    t.string   "estado"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
   create_table "tmp_proyectos", :force => true do |t|
     t.string   "nombre"
     t.string   "estado",           :default => "pendiente"
@@ -70,18 +61,6 @@ ActiveRecord::Schema.define(:version => 20131113011844) do
     t.datetime "updated_at",                                :null => false
     t.date     "fecha_expiracion"
     t.date     "expire_date"
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "rut"
-    t.string   "nombres"
-    t.string   "apellido_paterno"
-    t.string   "apellido_materno"
-    t.integer  "carrera"
-    t.integer  "sede"
-    t.date     "fecha_inicio"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
   end
 
   create_table "usuarios", :force => true do |t|
