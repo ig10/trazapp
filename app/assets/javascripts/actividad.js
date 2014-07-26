@@ -3,6 +3,7 @@ var Actividad = (function(){
   function init(){
     agregar_tarea();
     // cerrar_tarea();
+    evaluar_inline();
   }
 
   function nueva_tarea(){
@@ -45,6 +46,34 @@ var Actividad = (function(){
           $('#listado_tareas').html(data);
         }else{
           console.log("ERROR!!");
+        }
+      });
+    });
+  }
+
+  function evaluar_inline(){
+    var campo = $('.editable');
+    campo.on('click', function(e){
+      e.preventDefault();
+      var elem = $(this);
+      var tmpl = "<input class='text_field evaluacion_inline' id='evaluacion' name='evaluacion' size='3' type='text' value='zxc'>";
+      var input = elem.find('input[type=text]');
+      if(input.size() == 0){
+        var actual = $.trim(elem.text());
+        elem.html($(tmpl.replace("zxc", actual)));
+      }else{
+        elem.html("dsds");
+      }
+    });
+  }
+
+  function guardar_evaluacion(){
+    var btn = $('.btn-evaluar');
+    btn.on('click', function(e){
+      e.preventDefault();
+      $.post('/evaluar_tarea', btn.data(id).serialize(), function(data, status, xhr){
+        if(data == "OK"){
+
         }
       });
     });

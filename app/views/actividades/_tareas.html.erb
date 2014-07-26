@@ -14,9 +14,11 @@
       <span class="span1"> <%= index+1 %> </span>
       <span class="span2"> <%= tarea.descripcion %> </span>
       <span class="span3"> <%= tarea.revision.strftime("%d/%m/%Y") %> </span>
-      <span class="span2"> <%= tarea.evaluacion %> </span>
+      <span class="span2 editable"> <%= tarea.evaluacion %> </span>
       <span class="span2"> <%= check_box_tag "chk_tarea_#{index}", tarea.id, tarea.completa?, {class: 'checkbox'} %> </span>
-      <span class="span1"> <i class="icon-chevron-down tarea_detalle"></i> </span>
+      <span class="span1">
+        <button type="button" class="btn btn-mini btn-success btn-evaluar" data-id="<%= tarea.id %>" disabled>Evaluar</button>
+      </span>
     </div>
   <% end %>
 </div>
