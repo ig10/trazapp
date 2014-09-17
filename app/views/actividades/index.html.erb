@@ -1,0 +1,37 @@
+<div class="row-fluid">
+  <div class="page-header">
+    <h1>Gestionar Actividad</h1>
+  </div>
+  <div class="forms_proyecto">
+    <%= render partial: 'form' %>
+  </div>
+  <div class="contenedor_interno">
+    <h3>Tareas</h3>
+    <% if @tareas.any? %>
+      <div id="listado_tareas">
+        <%= render partial: 'tareas' %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        <i><b> No hay ninguna Tarea creada </b></i>
+      </div>
+    <% end %>
+    <br>
+    <button id="agregar_tarea" type="button" class="btn btn-success" data-id="<%= @actividad.id %>">
+      <i class="icon-plus"></i> Agregar
+    </button>
+    <div id="form_tarea">
+    </div>
+  </div>
+
+  <div class="form-actions-override">
+    <button id="actualizar_actividad" type="button" class="btn btn-primary">Terminar</button>
+    <%= link_to "Cancelar", url_to_proyecto(@actividad,'/editar'), class: 'btn' %>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    Actividad.init();
+  });
+</script>

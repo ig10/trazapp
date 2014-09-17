@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131029164311) do
+ActiveRecord::Schema.define(:version => 20131113011844) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "proyecto_id"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(:version => 20131029164311) do
     t.datetime "updated_at",                         :null => false
   end
 
+  create_table "tareas", :force => true do |t|
+    t.integer  "actividad_id"
+    t.text     "descripcion"
+    t.date     "revision"
+    t.string   "estado",       :default => "incompleta"
+    t.float    "evaluacion",   :default => 0.0
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
   create_table "tmp_actividades", :force => true do |t|
     t.integer  "proyecto_id"
     t.string   "modulo"
@@ -46,9 +56,11 @@ ActiveRecord::Schema.define(:version => 20131029164311) do
 
   create_table "tmp_proyectos", :force => true do |t|
     t.string   "nombre"
-    t.string   "estado"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "estado",           :default => "pendiente"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.date     "fecha_expiracion"
+    t.date     "expire_date"
   end
 
   create_table "usuarios", :force => true do |t|

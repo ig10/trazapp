@@ -1,0 +1,19 @@
+<h3>Nueva Tarea</h3>
+<div class="well contenedor-interno">
+  <%= form_for @tarea, url: {controller: 'actividades', action: 'nueva_tarea'},html: {method: 'PUT'} do |f| %>
+    <div class="control-group">
+      <%= label_tag :descripcion,'Descripción', class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :descripcion, {cols: 60, rows: 5, class: 'text_area'} %>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-info">Crear</button>
+    <button type="button" class="btn cerrar_tarea">Cancelar</button>
+  <% end %>
+</div>
+<script>
+  $(function(){
+    Actividad.nueva_tarea();
+  });
+</script>

@@ -1,40 +1,47 @@
-<table class="table table-striped table-responsive">
-  <thead>
-    <tr>
-      <th>Módulo</th>
-      <th>Nombre/Funcionalidad</th>
-      <th>Complejidad</th>
-      <th>Revisión</th>
-    </tr>
-  </thead>
-  <tbody class="actividades_body">
-    <% if Array(@actividades).any? %>
-      <% @actividades.each_with_index do |actividad, i| %>
-        <tr class="actividades_field">
-          <td><%= text_field_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %></td>
-          <td><%= text_field_tag "actividad_#{i+1}[funcionalidad]",actividad.funcionalidad, {class: 'text_field funcionalidad'} %></td>
-          <td><%= select_tag "actividad_#{i+1}[complejidad]",options_for_select(@complejidad, actividad.complejidad), {include_blank: true, class: 'number_field complejidad'} %></td>
-          <td>
-            <%= select_tag "actividad_#{i+1}[dia]", options_for_select(1..31,actividad.revision.day), {class: "fecha_dia"} %>
-            <%= select_tag "actividad_#{i+1}[mes]", options_for_select(meses_helper,actividad.revision.month), {class: "fecha_mes"} %>
-            <%= select_tag "actividad_#{i+1}[anio]", options_for_select(anio_helper,actividad.revision.year), {class: "fecha_anio"} %>
-          </td>
-        </tr>
-      <% end %>
-    <% else %>
-      <tr class="actividades_field">
-        <td><%= text_field_tag "actividad_1[modulo]",'', {class: 'text_field'} %></td>
-        <td><%= text_field_tag "actividad_1[funcionalidad]",'', {class: 'text_field funcionalidad'} %></td>
-        <td><%= select_tag "actividad_1[complejidad]",options_for_select(@complejidad), {include_blank: true, class: 'number_field complejidad'} %></td>
-        <td>
-          <%= select_tag 'actividad_1[dia]', options_for_select(1..31,Time.now.day), {class: "fecha_dia"} %>
-          <%= select_tag 'actividad_1[mes]', options_for_select(meses_helper,Time.now.month), {class: "fecha_mes"} %>
-          <%= select_tag 'actividad_1[anio]', options_for_select(anio_helper,Time.now.year), {class: "fecha_anio"} %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row-fluid actividades">
+  <div class="div1">Módulo</div>
+  <div class="div2">Nombre/Funcionalidad</div>
+  <div class="div3">Complejidad</div>
+  <div class="div4">Revisión</div>
+</div>
+
+<% if Array(@actividades).any? %>
+  <% @actividades.each_with_index do |actividad, i| %>
+    <div class="row-fluid detalle <%= cycle('odd', 'even') -%>">
+      <div class="div1">
+        <%= text_field_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %>
+      </div>
+      <div class="div2">
+        <%= text_field_tag "actividad_#{i+1}[funcionalidad]",actividad.funcionalidad, {class: 'text_field funcionalidad'} %>
+      </div>
+      <div class="div3">
+        <%= select_tag "actividad_#{i+1}[complejidad]",options_for_select(@complejidad, actividad.complejidad), {include_blank: true, class: 'number_field complejidad'} %>
+      </div>
+      <div class="div4">
+        <%= select_tag "actividad_#{i+1}[dia]", options_for_select(1..31,actividad.revision.day), {class: "fecha_dia"} %>
+        <%= select_tag "actividad_#{i+1}[mes]", options_for_select(meses_helper,actividad.revision.month), {class: "fecha_mes"} %>
+        <%= select_tag "actividad_#{i+1}[anio]", options_for_select(anio_helper,actividad.revision.year), {class: "fecha_anio"} %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="row-fluid detalle">
+    <div class="div1">
+      <%= text_field_tag "actividad_1[modulo]",'', {class: 'text_field'} %>
+    </div>
+    <div class="div2">
+      <%= text_field_tag "actividad_1[funcionalidad]",'', {class: 'text_field funcionalidad'} %>
+    </div>
+    <div class="div3">
+      <%= select_tag "actividad_1[complejidad]",options_for_select(@complejidad), {include_blank: true, class: 'number_field complejidad'} %>
+    </div>
+    <div class="div4">
+      <%= select_tag 'actividad_1[dia]', options_for_select(1..31,Time.now.day), {class: "fecha_dia"} %>
+      <%= select_tag 'actividad_1[mes]', options_for_select(meses_helper,Time.now.month), {class: "fecha_mes"} %>
+      <%= select_tag 'actividad_1[anio]', options_for_select(anio_helper,Time.now.year), {class: "fecha_anio"} %>
+    </div>
+  </div>
+<% end %>
 
 <div class="control_actividades">
   <a href="#" id="nueva_actividad"><span class="button add"></span></a>

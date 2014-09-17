@@ -16,6 +16,7 @@ gem 'bootstrap-sass'
 gem "twitter-bootstrap-rails"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'axlsx'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

@@ -19,4 +19,13 @@ module ApplicationHelper
   def anio_helper
     Time.now.year..(Time.now + 10.years).year
   end
+
+  def url_to_actividad(actividad, action='')
+    raw "/proyecto/actividad#{action}/#{actividad.proyecto.id}/#{actividad.proyecto.codigo_acceso}/#{actividad.id}"
+  end
+
+  def url_to_proyecto(actividad, action="")
+    raw "/proyecto#{action}/#{actividad.proyecto.id}/#{actividad.proyecto.codigo_acceso}"
+  end
+
 end

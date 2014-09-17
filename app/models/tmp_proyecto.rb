@@ -15,4 +15,13 @@ class TmpProyecto < ActiveRecord::Base
     Digest::SHA1.hexdigest("RxO39kysE#{id}uoYx#{created_at.strftime('%H%S')}LwQ4r7Di9hOV")[2..10]
   end
 
+  def cantidad_actividades
+    self.actividades.count
+  end
+
+  def evaluacion
+    #Must be deleted after Bug Fix on classes and model name
+    rand(1.0..7.0).round(1)
+  end
+
 end

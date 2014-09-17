@@ -1,0 +1,40 @@
+<h3>Reportes</h3>
+<%= form_tag({action: 'reporte_general'} ,{method: 'post', id: "reporte_general"}) do %>
+  <table>
+    <tr>
+      <td>Rut de Alumno: </td>
+      <td><%= select_tag "rut" , options_for_select(@ruts), {prompt: "Todos"} %></td>
+    </tr>
+    <tr>
+      <td>Seleccione Sede: </td>
+      <td><%= select_tag "sede" , options_for_select(@sedes), {prompt: "Todas"} %></td>
+    </tr>
+    <tr>
+      <td>Estado de Proyecto: </td>
+      <td><%= select_tag "estado" , options_for_select(@estados), {prompt: "Todos"} %></td>
+    </tr>
+    <tr>
+      <td>Con fecha de Inicio: </td>
+      <td>
+        <%= select_tag :inicio_dia, options_for_select(1..31),{prompt: 'Todas', class: 'input-small'} %>
+        <%= select_tag :inicio_mes, options_for_select(meses_helper),{prompt: 'Todas', class: 'fecha_mes'} %>
+        <%= select_tag :inicio_anio, options_for_select((Time.now.year - 2)..(Time.now.year + 10)),{prompt: 'Todas', class: 'input-small'} %>
+      </td>
+    </tr>
+    <tr>
+      <td>Con fecha de Cierre: </td>
+      <td>
+        <%= select_tag :cierre_dia, options_for_select(1..31),{prompt: 'Todas', class: 'input-small'} %>
+        <%= select_tag :cierre_mes, options_for_select(meses_helper),{prompt: 'Todas', class: 'fecha_mes'} %>
+        <%= select_tag :cierre_anio, options_for_select((Time.now.year - 2)..(Time.now.year + 10)),{prompt: 'Todas', class: 'input-small'} %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <br>
+        <%= submit_tag 'Descargar', class: 'btn btn-primary' %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
