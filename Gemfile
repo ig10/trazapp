@@ -12,7 +12,7 @@ gem 'cancan', '~>1.5.1'
 gem 'will_paginate'
 gem 'compass-rails'
 gem 'bootstrap-sass'
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'axlsx'
