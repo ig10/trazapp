@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131113011844) do
+ActiveRecord::Schema.define(:version => 20140930003518) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "proyecto_id"
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(:version => 20131113011844) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "configuraciones", :force => true do |t|
+    t.integer  "autor"
+    t.string   "nombre_archivo"
+    t.string   "formato"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+# Could not dump table "estructuras" because of following StandardError
+#   Unknown type 'hstore' for column 'json'
 
   create_table "proyectos", :force => true do |t|
     t.string   "nombre"
