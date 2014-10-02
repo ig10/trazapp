@@ -12,6 +12,7 @@ class Usuario < ActiveRecord::Base
   scope :con_cierre_el, lambda{ |fecha| where(fecha) unless fecha.blank? }
 
   SEDES = ["Alameda", "Antonio Varas", "Concepción", "Maipú", "Melipilla", "Padre Alonso de Ovalle", "Plaza Norte", "Plaza Oeste", "Plaza Vespucio", "Puente Alto", "Renca", "San Bernardo", "San Carlos de Apoquindo", "San Joaquín", "Valparaiso", "Viña del Mar"]
+  TmpDir = "#{Rails.root}/tmp/users"
 
   def self.rut_alumnos
     self.where(perfil: 'alumno').uniq.order(:rut).pluck(:rut)
@@ -51,10 +52,33 @@ class Usuario < ActiveRecord::Base
      return package
 
     end
+  end
 
-
-
-
+  def self.load_students(tmpfile)
+    # MODEL STUFF
+    FileUtils.mkdir_p TmpDir unless File.directory?(TmpDir)
+    xlsTmp = "#{TmpDir}/students.xlsx"
+    begin
+      FileUtils.cp(tmpfile.path, xlsTmp)
+      book = Roo::Excelx.new(xlsTmp)
+      sheet = book.sheet(0)
+      columns = sheet.column(0)
+      # Retreives the first column, after string "Nª" as table starting index
+      initial_index = (columns.rindex{|c| c =~ /N\º/} + 1 || 0)
+      # This extracts the index of the last field of the table with valid and non blank data
+      last_index = (sheet.column(0).each_with_index.select{ |v,i| v.strip.blank? && i > initial_index }.first.last - 1)
+      # Iteration over the data table of Students
+      initial_index.upto(last_index) do |row|
+        Usuario.create(
+          rut: sheet.cell(row, 1),
+          nombre: sheet.cell(row, 2)
+          )
+      end
+      {error: false, msg: 'OK'}
+    rescue Exception => e
+      {error: true, msg: e.message}
+    end
+    return {status: 'OK'}.to_json
   end
 
   private

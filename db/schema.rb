@@ -33,8 +33,10 @@ ActiveRecord::Schema.define(:version => 20140930003518) do
     t.datetime "updated_at",     :null => false
   end
 
-# Could not dump table "estructuras" because of following StandardError
-#   Unknown type 'hstore' for column 'json'
+  create_table "estructuras", :force => true do |t|
+    t.string "nombre"
+    t.hstore "json"
+  end
 
   create_table "proyectos", :force => true do |t|
     t.string   "nombre"
