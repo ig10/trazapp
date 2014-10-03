@@ -55,30 +55,30 @@ class Usuario < ActiveRecord::Base
   end
 
   def self.load_students(tmpfile)
-    # MODEL STUFF
     FileUtils.mkdir_p TmpDir unless File.directory?(TmpDir)
     xlsTmp = "#{TmpDir}/students.xlsx"
+    results = {error: false, msg: 'OK'}
     begin
       FileUtils.cp(tmpfile.path, xlsTmp)
       book = Roo::Excelx.new(xlsTmp)
       sheet = book.sheet(0)
-      columns = sheet.column(0)
+      columns = sheet.column(1)
       # Retreives the first column, after string "Nª" as table starting index
-      initial_index = (columns.rindex{|c| c =~ /N\º/} + 1 || 0)
+      initial_index = (columns.rindex{|c| c =~ /^N.$/} || 0) + 2
       # This extracts the index of the last field of the table with valid and non blank data
-      last_index = (sheet.column(0).each_with_index.select{ |v,i| v.strip.blank? && i > initial_index }.first.last - 1)
+      last_index = (sheet.column(1).each_with_index.select{ |v,i| v.to_s.strip.blank? && i > initial_index }.first.last)
       # Iteration over the data table of Students
       initial_index.upto(last_index) do |row|
         Usuario.create(
-          rut: sheet.cell(row, 1),
-          nombre: sheet.cell(row, 2)
+          rut: sheet.cell(row, 2).strip,
+          nombre_completo: sheet.cell(row, 3).strip.titleize,
+          perfil: 'alumno'
           )
       end
-      {error: false, msg: 'OK'}
     rescue Exception => e
-      {error: true, msg: e.message}
+      results =  {error: true, msg: e.message}
     end
-    return {status: 'OK'}.to_json
+    return results.to_json
   end
 
   private
