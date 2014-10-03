@@ -5,7 +5,7 @@ class TmpProyecto < ActiveRecord::Base
   delegate :rut, :nombre_completo, :correo_electronico, to: :alumnos
 
   validates_presence_of :nombre
-  before_save :formatear_nombre
+  before_save :formatear_nombre, :expirar
 
   def formatear_nombre
     self.nombre = self.nombre.titleize
@@ -22,6 +22,10 @@ class TmpProyecto < ActiveRecord::Base
   def evaluacion
     #Must be deleted after Bug Fix on classes and model name
     rand(1.0..7.0).round(1)
+  end
+
+  def expirar
+    fecha_expiracion = Time.now + 15.days
   end
 
 end
