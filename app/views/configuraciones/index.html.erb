@@ -1,0 +1,12 @@
+<h3>Configuraciones</h3>
+
+
+<div class="container-fluid">
+  <h4>Cargar Alumnos</h4>
+  <div class="grouped-elements" style="border: 1px #CCC solid; padding: 10px">
+    <%= form_tag({action: 'load_students'}, multipart: true) do %>
+      <%= file_field_tag :load_excel %>
+      <%= submit_tag 'Cargar', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
