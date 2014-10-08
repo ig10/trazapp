@@ -22,26 +22,26 @@
         <td><%= tmp_proyecto.nombre %></td>
         <td><%= tmp_proyecto.estado %></td>
         <td><%= tmp_proyecto.created_at.strftime('%d/%m/%Y - %H:%M:%S') %></td>
-        <td><%= tmp_proyecto.fecha_expiracion.strftime('%d/%m/%Y') %></td>
+        <td><%= tmp_proyecto.fecha_expiracion.try(:strftime, '%d/%m/%Y') %></td>
         <td><%= tmp_proyecto.codigo_acceso %></td>
         <% if tmp_proyecto.estado.eql?('aprobado')%>
           <td>
-            <%= link_to "Editar", '#', {class: "btn btn-mini disabled"} %>
+            <%= link_to "Editar", '#', {class: "btn btn-xs disabled"} %>
             <%= link_to 'Eliminar', "/solicitud/eliminar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}" ,
-                        data: {confirm: '¿Estás seguro?'}, class: 'btn btn-mini btn-danger' %>
-            <%= link_to "Aprobar", '#', {class: "btn btn-mini btn-success disabled"} %>
+                        data: {confirm: '¿Estás seguro?'}, class: 'btn btn-xs btn-danger' %>
+            <%= link_to "Aprobar", '#', {class: "btn btn-xs btn-success disabled"} %>
             |
-            <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-mini btn-info"} %>
+            <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-xs btn-info"} %>
           </td>
           <td><%= check_box_tag "chk_proyecto_#{index}", tmp_proyecto.id, false, {disabled: true ,class: 'checkbox centered'} %></td>
         <% else %>
           <td>
-            <%= link_to "Editar", "/solicitud/editar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}", {class: "btn btn-mini"} %>
+            <%= link_to "Editar", "/solicitud/editar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}", {class: "btn btn-xs"} %>
             <%= link_to 'Eliminar', "/solicitud/eliminar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}" ,
-                        data: {confirm: '¿Estás seguro?'}, class: 'btn btn-mini btn-danger' %>
-            <%= link_to "Aprobar", '#', {'data-id' => tmp_proyecto.id, class: "btn btn-mini btn-success aprobar"} %>
+                        data: {confirm: '¿Estás seguro?'}, class: 'btn btn-xs btn-danger' %>
+            <%= link_to "Aprobar", '#', {'data-id' => tmp_proyecto.id, class: "btn btn-xs btn-success aprobar"} %>
             |
-            <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-mini btn-info"} %>
+            <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-xs btn-info"} %>
           </td>
           <td><%= check_box_tag "chk_proyecto_#{index}", tmp_proyecto.id, false, {class: 'checkbox centered'} %></td>
         <% end %>
