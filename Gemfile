@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby "2.0.0"
 
 gem 'rails', '3.2.13'
 
@@ -17,6 +16,9 @@ gem "twitter-bootstrap-rails"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'axlsx'
+gem 'roo'
+gem 'activerecord-postgres-hstore'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

@@ -13,4 +13,5 @@
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'tmp_actividad', 'tmp_actividades'
   inflect.irregular 'actividad', 'actividades'
+  inflect.irregular 'configuracion', 'configuraciones'
 end

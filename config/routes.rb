@@ -18,6 +18,11 @@ Trazapp::Application.routes.draw do
   match '/activos' => 'proyectos#index'
   match '/reportes' => 'reportes#index'
   match '/reporte_general' => 'reportes#reporte_general'
+  # match '/configuraciones' => 'configuraciones#index'
+  scope '/configuraciones', controller: 'configuraciones' do
+    match '/', action: 'index'
+    post '/load_students', action: 'load_students'
+  end
 
   match '/tmp_proyectos' => 'tmp_proyectos#create'
   match '/tmp_proyectos/:id' => 'tmp_proyectos#update'
