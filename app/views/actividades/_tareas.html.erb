@@ -1,22 +1,20 @@
-<div class="row-fluid listado_tareas">
-  <div class="span9">
-  </div>
-  <div class="span9 tarea <%= cycle('odd', 'even') -%>">
-    <span class="span1"> <strong>#</strong> </span>
-    <span class="span2"> <strong>Descripción</strong> </span>
-    <span class="span3"> <strong>Revisión</strong> </span>
-    <span class="span2"> <strong>Evaluación</strong> </span>
-    <span class="span2"> <strong>¿Completa?</strong> </span>
-    <span class="span1"> <strong>Selección</strong> </span>
+<div class="row listado_tareas">
+  <div class="tarea header <%= cycle('odd', 'even') -%>">
+    <span class="col-md-1"> <strong>#</strong> </span>
+    <span class="col-md-2"> <strong>Descripción</strong> </span>
+    <span class="col-md-2"> <strong>Revisión</strong> </span>
+    <span class="col-md-2"> <strong>Evaluación</strong> </span>
+    <span class="col-md-2"> <strong>¿Completa?</strong> </span>
+    <span class="col-md-2"> <strong></strong> </span>
   </div>
   <% @tareas.each_with_index do |tarea, index| %>
-    <div class="span9 tarea <%= cycle('odd', 'even') -%>">
-      <span class="span1"> <%= index+1 %> </span>
-      <span class="span2"> <%= tarea.descripcion %> </span>
-      <span class="span3"> <%= tarea.revision.strftime("%d/%m/%Y") %> </span>
-      <span class="span2 editable"> <%= tarea.evaluacion %> </span>
-      <span class="span2"> <%= check_box_tag "chk_tarea_#{index}", tarea.id, tarea.completa?, {class: 'checkbox'} %> </span>
-      <span class="span1">
+    <div class="tarea <%= cycle('odd', 'even') -%>">
+      <span class="col-md-1"> <%= index+1 %> </span>
+      <span class="col-md-2"> <%= tarea.descripcion %> </span>
+      <span class="col-md-2"> <%= tarea.revision.strftime("%d/%m/%Y") %> </span>
+      <span class="col-md-2 editable"> <%= tarea.evaluacion %> </span>
+      <span class="col-md-2"> <%= check_box_tag "chk_tarea_#{index}", tarea.id, tarea.completa?, {class: 'checkbox'} %> </span>
+      <span class="col-md-2">
         <button type="button" class="btn btn-mini btn-success btn-evaluar" data-id="<%= tarea.id %>" disabled>Evaluar</button>
       </span>
     </div>
