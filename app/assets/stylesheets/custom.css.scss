@@ -102,16 +102,18 @@
   }
 }
 
-.fecha_dia{
-  width: 55px;
-}
-
-.fecha_mes{
-  width: 115px;
-}
-
-.fecha_anio{
-  width: 75px;
+// Date Structure
+.dates{
+  span{
+    display: inline-block;
+    width: 55px;
+    +span{
+      width: 115px;
+      +span{
+        width: 75px;
+      }
+    }
+  }
 }
 
 .checkbox{
@@ -121,7 +123,7 @@
 }
 
 .cant_proyectos{
-  color: grey;
+  color: gray;
   background-color: white;
 }
 
@@ -158,6 +160,9 @@ form{
   .text_area{
     width: 50%;
   }
+  &.actividad{
+    max-width: 400px;
+  }
 }
 
 #form_tarea{
@@ -166,12 +171,38 @@ form{
 
 div.tarea{
   padding-top: 5px;
-  height: 10px;
+  height: 30px;
   text-align: center;
   &.odd{
     background-color: #f5f5f5;
   }
+  .checkbox{
+    margin-left: 55px;
+  }
 }
+
+// Bootstrap Override Fix
+.progress-striped {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+}
+.active{
+  -webkit-animation: progress-bar-stripes 2s linear infinite;
+          animation: progress-bar-stripes 2s linear infinite;
+}
+.sr-only{
+  position: relative;
+  width: 30px;
+  height: 20px;
+  padding: 0;
+  margin: 0px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
 // Own Responsive styles
 @media screen and (max-width: 780px){
   .actividades{
@@ -182,16 +213,81 @@ div.tarea{
   }
   .detalle{
     height: initial;
-    @for $i from 1 through 9{
-      .span#{$i}{
-        padding-top: 13px;
-      }
-    }
+
   }
   div.tarea{
     height: initial;
   }
 }
+
+
+ // Small screens
+@media only screen and (max-width: 420px){
+  .forms_proyecto{
+    padding: 0 10px;
+  }
+}
+
+//Tablet
+@media only screen and (max-width: 641px) {
+  .row-fluid{
+    .page-header{
+      h1{
+        text-align: center;
+      }
+    }
+    .forms_proyecto{
+      input{
+        height: 50px;
+      }
+      select{
+        @extend input;
+      }
+    }
+  }
+  .contenedor_interno{
+    padding: 0 30px;
+  }
+  .listado_tareas{
+    .tarea{
+      float: right;
+      width: 70%;
+      border: 1px solid gray;
+      span{
+        float: right;
+        width: 100%;
+        text-align: left;
+        &:last-child{
+          height: 37px;
+        }
+        .checkbox{
+          margin-left: 0;
+        }
+      }
+
+
+      &.header{
+        float: left;
+        width: 30%;
+        border: 1px solid gray;
+        span{
+          float: left;
+          width: 100%;
+          text-align: left;
+          &:last-child{
+            height: 40px
+          }
+        }
+      }
+
+    }
+  }
+
+
+
+} /* min-width 641px, medium screens */
+
+
 
 #reporte_general{
   border: 1px solid rgb(218, 218, 218);
