@@ -81,6 +81,10 @@ class Usuario < ActiveRecord::Base
     return results.to_json
   end
 
+  def self.alumnos_for_select
+    self.where(perfil: 'alumno').uniq.order(:rut).map{ |a| [a.rut, a.id] }
+  end
+
   private
 
   def self.crear_fecha_busqueda(tipo, dia, mes, anio)

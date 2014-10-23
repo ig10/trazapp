@@ -69,7 +69,7 @@ var TmpProyecto = (function(){
     });
 
     function aprobar_proyecto(element){
-      var boton = $(elem);
+      var boton = $(element);
       var id = boton.data('id').toString();
       var codigo = boton.parent().prev().text();
       if(!boton.hasClass('disabled')){
