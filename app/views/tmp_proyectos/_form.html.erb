@@ -2,7 +2,7 @@
   <div class="control-group">
     <%= f.label :nombre, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :nombre, :class => 'text_field' %>
+      <%= f.text_field :nombre, class: 'form-control' %>
     </div>
   </div>
   <div class="control-group">
@@ -17,17 +17,10 @@
           </div>
         <% end %>
       <% else %>
-        <div class="user_fields">
-          <%= text_field_tag 'alumno_1[rut]', '',{placeholder:'Rut', class: 'text_field usuario'} %>
-          <%= text_field_tag 'alumno_1[nombre_completo]', '',{placeholder:'Nombre y Apellidos', class: 'text_field usuario'} %>
-          <%= text_field_tag 'alumno_1[correo_electronico]', '',{placeholder:'Correo Electrónico', class: 'text_field usuario'} %>
-        </div>
+        <%= select_tag :alumnos, options_for_select(@lista_alumnos), {class: 'form-control', prompt: 'Selecione alumnos'} %>
+        <br>
+        <%= button_tag :Agregar, class: 'btn btn-success'%>
       <% end %>
     </div>
-    <div class="controls">
-      <a href="#" id="nuevo_alumno"><span class="button add"></span></a>
-      <a href="#" id="eliminar_alumno"><span class="button delete"></span></a>
-    </div>
   </div>
-  <%= render partial: 'form_actividad' %>
 <% end %>
