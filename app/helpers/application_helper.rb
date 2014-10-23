@@ -28,4 +28,9 @@ module ApplicationHelper
     raw "/proyecto#{action}/#{actividad.proyecto.id}/#{actividad.proyecto.codigo_acceso}"
   end
 
+  def boolean_icon(bool)
+    content_tag(:span, '', class: "glyphicon glyphicon-#{bool ? 'ok' : 'remove'}", style: "color: #{bool ? 'green' : 'red'}; text-align: center;")
+
+  end
+
 end
