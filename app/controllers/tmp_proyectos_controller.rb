@@ -20,7 +20,7 @@ class TmpProyectosController < ApplicationController
   def new
     @tmp_proyecto = TmpProyecto.new
     @tmp_actividad = TmpActividad.new
-    @complejidad = TmpActividad::Complejidad
+    @lista_alumnos = Usuario.alumnos_for_select
     render :new, layout: 'alumno'
   end
 
