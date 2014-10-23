@@ -25,11 +25,11 @@
         <td><%= proyecto.fecha_cierre.strftime('%d/%m/%Y') %></td>
         <td><%= proyecto.codigo_acceso %></td>
         <td>
-          <%= link_to "Ver/Editar", "/proyecto/editar/#{proyecto.id}/#{proyecto.codigo_acceso}", {class: "btn btn-mini"} %>
+          <%= link_to "Ver/Editar", "/proyecto/editar/#{proyecto.id}/#{proyecto.codigo_acceso}", {class: "btn btn-xs"} %>
           <%= link_to 'Eliminar', "/proyecto/eliminar/#{proyecto.id}/#{proyecto.codigo_acceso}" , data: { confirm: '¿Estás seguro?'},
-                      class: 'btn btn-mini btn-danger' %>
+                      class: 'btn btn-xs btn-danger' %>
           |
-          <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-mini btn-info"} %>
+          <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-xs btn-info"} %>
         </td>
         <td><%= check_box_tag "chk_proyecto_#{index}", proyecto.id, false, {class: 'checkbox centered'} %></td>
       </tr>
