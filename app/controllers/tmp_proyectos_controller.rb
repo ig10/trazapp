@@ -20,7 +20,8 @@ class TmpProyectosController < ApplicationController
   def new
     @tmp_proyecto = TmpProyecto.new
     @tmp_actividad = TmpActividad.new
-    @lista_alumnos = Usuario.alumnos_for_select
+    @alumnos = Seccion.to_hash.to_json
+    @secciones = JSON.parse(@alumnos).keys
     render :new, layout: 'alumno'
   end
 
