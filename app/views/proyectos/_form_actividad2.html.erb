@@ -1,35 +1,43 @@
-<div class="container-fluid">
+<div class="contenedor_interno">
   <h3>Actividades</h3>
-  <div class="row-fluid actividades">
-    <div class="span3">Módulo</div>
-    <div class="span4">Progreso</div>
-    <div class="span4">Acciones</div>
-  </div>
-
-  <% if Array(@actividades).any? %>
-    <% @actividades.each_with_index do |actividad, i| %>
-      <div class="row-fluid detalle <%= cycle('odd', 'even') -%>">
-        <div class="span3">
-          <%= label_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %>
+  <div id="listado_tareas">
+    <div class="row listado_tareas">
+      <div class="tarea header <%= cycle('odd', 'even') -%>">
+        <span class="col-md-1"> <strong>#</strong></span>
+        <span class="col-md-2"> <strong>Módulo</strong></span>
+        <span class="col-md-3"> <strong>Progreso</strong></span>
+        <span class="col-md-5"> <strong>Acciones</strong></span>
         </div>
-        <div class="span4">
-          <div class="progress progress-striped active">
-            <% act = actividad.progreso[:completo]%>
-            <div class="bar" style="width: <%= act %>%;"><%= act %>%</div>
+    <% if Array(@actividades).any? %>
+      <% @actividades.each_with_index do |actividad, i| %>
+        <div class="tarea <%= cycle('odd', 'even') -%>">
+          <span class="col-md-1"> <%= i+1 %> </span>
+          <span class="col-md-2">
+            <%= label_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %>
+          </span>
+          <span class="col-md-3">
+            <div class="form-group">
+            <div class="progress">
+              <% act = @proyecto.progreso[:completo]%>
+              <div class="progress-bar progress-striped active"  role="progressbar" aria-valuenow="<%= act %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= act %>%">
+                <span class="sr-only"><%= act %> %</span>
+              </div>
+            </div>
           </div>
-
+          </span>
+          <span class="col-md-5">
+            <%= link_to "Ver/Editar", url_to_actividad(actividad), {class: "btn btn-mini"} %>
+            <%= link_to 'Eliminar', url_to_actividad(actividad, '/eliminar') , data: { confirm: '¿Estás seguro?'},
+                        class: 'btn btn-mini btn-danger' %>
+          </span>
         </div>
-        <div class="span4">
-          <%= link_to "Ver/Editar", url_to_actividad(actividad), {class: "btn btn-mini"} %>
-          <%= link_to 'Eliminar', url_to_actividad(actividad, '/eliminar') , data: { confirm: '¿Estás seguro?'},
-                      class: 'btn btn-mini btn-danger' %>
-        </div>
-      </div>
+      <% end %>
+    <% else %>
+      NUEVA ACT! (In Progress...)
+      <a href="#" id="nueva_actividad"><span class="button add"></span></a>
     <% end %>
-  <% else %>
-    NUEVA ACT! (In Progress...)
-    <a href="#" id="nueva_actividad"><span class="button add"></span></a>
-  <% end %>
+    </div>
+  </div>
 </div>
 <!-- <div class="control_actividades">
   <a href="#" id="nueva_actividad"><span class="button add"></span></a>
