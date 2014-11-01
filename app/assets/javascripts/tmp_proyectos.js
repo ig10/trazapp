@@ -1,49 +1,62 @@
 var TmpProyecto = (function(){
   function init(){
-    $('#nuevo_alumno').on('click', function(e){
-      e.preventDefault();
-      var alumnos = ($('.user_fields').size()+1).toString();
-      var tmpl = '<div class="user_fields extended"><input class="text_field usuario" id="alumno_1_rut" name="alumno_1[rut]" placeholder="Rut" type="text" value=""><input class="text_field usuario" id="alumno_1_nombre_completo" name="alumno_1[nombre_completo]" placeholder="Nombre y Apellidos" type="text" value=""><input class="text_field usuario" id="alumno_1_correo_electronico" name="alumno_1[correo_electronico]" placeholder="Correo Electrónico" type="text" value=""></div>'.replace(/1/g, alumnos);
-      $(tmpl).appendTo('.alumnos');
+    $('#secciones').on('change', function() {
+      loadStudents($(this).val());
     });
 
-    $('#eliminar_alumno').on('click', function(e){
-      e.preventDefault();
-      $('.user_fields').last().remove();
-    });
-
-    $('#nueva_actividad').on('click', function(e){
-      e.preventDefault();
-      var actividad = $('.actividades_field');
-      var cantidad = (actividad.size()+1).toString();
-      var tmpl = actividad.first().clone().html().replace(/actividad_1/g,"actividad_".concat(cantidad));
-      $("<tr class='actividades_field'>"+tmpl+"</tr>").appendTo(actividad.parent());
-    });
-
-    $('#eliminar_actividad').on('click', function(e){
-      e.preventDefault();
-      var actividades = $('.actividades_field');
-      if(actividades.size() > 1){
-        actividades.last().remove();
-      }
-    });
-
-    $('#inscribir').on('click', function(e){
-      e.preventDefault();
-      var form = $('form');
-      $.post(form.attr('action'), form.serialize(), function(data, status, xhr){
-        console.log(data, status, xhr);
-        if(data=="OK"){
-          $('.alert').show();
-        }
-      });
-    });
+    addStudentTrigger();
 
     $('a').on('click', function(e){
       if($(this).attr('href') == "#"){
         e.preventDefault();
       }
     });
+  }
+
+  function loadStudents(selected) {
+    var json = JSON.parse($('#alumnos_json').val());
+    var studentSelector = $('.students-list');
+    var tmpl = "<option value='id'>nombre_completo</option>";
+    var selected = json[selected];
+    removeStudents();
+    $.each(selected, function(i, e) {
+      var optionBase = tmpl;
+      studentSelector.append($.parseHTML(optionBase.replace(/id/g, e[0]).replace(/nombre_completo/g, e[1])));
+    });
+  }
+
+  function removeStudents() {
+    var studentSelector = $('.students-list');
+    studentSelector.empty().append($.parseHTML("<option>Seleccione alumno</option>"));
+  }
+
+  function addStudentTrigger() {
+    $('.btn.add').on('click', function(e) {
+      e.preventDefault();
+      addStudent();
+    })
+  }
+
+  function addStudent() {
+    var studentSelector = $('.students-list');
+    var tmpl = "<span data-id='id-alumno'>nombre</span>";
+    var listBox = $('.lista');
+    var student = searchStudent(studentSelector.val());
+
+    listBox.append($.parseHTML(tmpl.replace(/id-alumno/g, student[0]).replace(/nombre/g, student[1])));
+  }
+
+  function searchStudent(id) {
+    var json = JSON.parse($('#alumnos_json').val());
+    var selected = json[$('#secciones').val()];
+    var found;
+    $.each(selected, function(i, e) {
+      if(e[0] == id){
+        found = e;
+      }
+    });
+
+    return found;
   }
 
   function profesor(){
