@@ -22,6 +22,11 @@ class Proyecto < ActiveRecord::Base
     Digest::SHA1.hexdigest("TxOkysE#{id}uoYx#{created_at.strftime('%H%S')}MwpI7F8i9hOV")[3..11]
   end
 
+  def progreso
+    total = rand(1..100) #self.tareas.count
+    completas = rand(1..total) #self.tareas.completas
 
+    {completo: (completas*100/total).round, incompleto: total-completas}
+  end
 
 end
