@@ -1,26 +1,30 @@
-<%= form_for @tmp_proyecto, html: { method: 'POST', class: 'form-horizontal' } do |f| %>
+<%= form_for @tmp_proyecto, html: { method: 'POST', class: 'form-horizontal new-proyecto' } do |f| %>
   <div class="control-group">
-    <%= f.label :nombre, :class => 'control-label' %>
+    <%= label_tag '', 'Nombre del proyecto', class: 'control-label' %>
     <div class="controls">
       <%= f.text_field :nombre, class: 'form-control' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label 'Alumnos(s)', :class => 'control-label' %>
+    <%= f.label 'Alumno(s)', :class => 'control-label' %>
     <div class="controls alumnos">
-      <% if Array(@alumnos).any? %>
-        <% @alumnos.each_with_index do |alumno, i| %>
-          <div class="user_fields <%= 'extended' if i > 0 %>">
-            <%= text_field_tag "alumno_#{i+1}[rut]", alumno.rut ,{placeholder:'Rut', class: 'text_field usuario'} %>
-            <%= text_field_tag "alumno_#{i+1}[nombre_completo]", alumno.nombre_completo ,{placeholder:'Nombre y Apellidos', class: 'text_field usuario'} %>
-            <%= text_field_tag "alumno_#{i+1}[correo_electronico]", alumno.correo_electronico ,{placeholder:'Correo Electrónico', class: 'text_field usuario'} %>
+      <div class="alumnos-container">
+        <div class="selectores">
+          <%= select_tag :secciones, options_for_select(@secciones),{class: 'form-control', prompt: 'Secciones'}  %>
+          <br>
+          <%= select_tag :alumnos, options_for_select([]), {class: 'form-control students-list', prompt: 'Seleccione alumno'} %>
+          <br>
+          <%= button_tag 'Agregar', class: 'btn btn-success add'%>
+        </div>
+
+        <div class="seleccionados">
+          <div class="lista">
           </div>
-        <% end %>
-      <% else %>
-        <%= select_tag :alumnos, options_for_select(@lista_alumnos), {class: 'form-control', prompt: 'Selecione alumnos'} %>
-        <br>
-        <%= button_tag :Agregar, class: 'btn btn-success'%>
-      <% end %>
+        </div>
+      </div>
+
+      <%= hidden_field_tag :alumnos_json, @alumnos %>
+
     </div>
   </div>
 <% end %>
