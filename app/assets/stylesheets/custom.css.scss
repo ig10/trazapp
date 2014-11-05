@@ -215,6 +215,67 @@ div.tarea{
   border: 0;
 }
 
+#reporte_general{
+  border: 1px solid rgb(218, 218, 218);
+  width: 45%;
+  padding: 30px;
+}
+
+.evaluacion_inline{
+  width: 23%;
+  margin-top: -3px;
+  height: 15px !important;
+  padding-left: 10px !important;
+}
+
+.button-load{
+  margin-top: 10px;
+}
+
+//TMP PROYECTO
+form.new-proyecto{
+  .alumnos-container{
+    height: 165px;
+    padding: 10 0px;
+    .selectores{
+      float: left;
+      width: 50%;
+    }
+
+    .seleccionados{
+      float: right;
+      width: 45%;
+      height: 140px;
+      border: 1px solid #CCC;
+      overflow-y: auto;
+      padding: 10px;
+      border-radius: 4px;
+      .lista{
+        span{
+          width: 100%;
+          padding: 3px 6px;
+          position: relative;
+          display: inline-block;
+          &::after{
+            content: "X";
+            float: right;
+            padding: 0 10px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover{
+              color: red;
+            }
+          }
+          &:hover{
+            cursor: default;
+            background-color: rgb(213, 238, 247);
+          }
+        }
+      }
+    }
+  }
+}
+
 
 // Own Responsive styles
 @media screen and (max-width: 780px){
@@ -295,26 +356,6 @@ div.tarea{
 
     }
   }
-
-
-
 } /* min-width 641px, medium screens */
 
-
-
-#reporte_general{
-  border: 1px solid rgb(218, 218, 218);
-  width: 45%;
-  padding: 30px;
-}
-.evaluacion_inline{
-  width: 23%;
-  margin-top: -3px;
-  height: 15px !important;
-  padding-left: 10px !important;
-}
-
-.button-load{
-  margin-top: 10px;
-}
 

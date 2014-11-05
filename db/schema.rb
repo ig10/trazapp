@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141003000916) do
+ActiveRecord::Schema.define(:version => 20141101002421) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "proyecto_id"
@@ -46,6 +46,22 @@ ActiveRecord::Schema.define(:version => 20141003000916) do
     t.datetime "updated_at",                          :null => false
     t.integer  "estructura_id"
   end
+
+  create_table "secciones", :force => true do |t|
+    t.string   "nombre"
+    t.string   "jornada"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "sigla"
+  end
+
+  create_table "secciones_usuarios", :id => false, :force => true do |t|
+    t.integer "seccion_id"
+    t.integer "usuario_id"
+  end
+
+  add_index "secciones_usuarios", ["seccion_id"], :name => "index_secciones_usuarios_on_seccion_id"
+  add_index "secciones_usuarios", ["usuario_id"], :name => "index_secciones_usuarios_on_usuario_id"
 
   create_table "tareas", :force => true do |t|
     t.integer  "actividad_id"

@@ -1,6 +1,7 @@
 class Usuario < ActiveRecord::Base
   belongs_to :solicitud, class_name: 'TmpProyecto', foreign_key: 'proyecto_id'
   belongs_to :proyecto, :class_name => 'TmpProyecto', :foreign_key => 'proyecto_id'
+  has_and_belongs_to_many :secciones
   attr_accessible :activo, :carrera, :correo_electronico, :nombre_completo, :perfil, :rut, :sede, :proyecto_id
 
   validates_presence_of :rut, :nombre_completo
@@ -10,6 +11,7 @@ class Usuario < ActiveRecord::Base
   scope :con_estado, lambda{ |estado| where(estado: estado) unless estado.blank? }
   scope :creado_el, lambda{ |fecha| where(fecha) unless fecha.blank? }
   scope :con_cierre_el, lambda{ |fecha| where(fecha) unless fecha.blank? }
+  scope :con_perfil_alumno, where(perfil: 'alumno')
 
   SEDES = ["Alameda", "Antonio Varas", "Concepción", "Maipú", "Melipilla", "Padre Alonso de Ovalle", "Plaza Norte", "Plaza Oeste", "Plaza Vespucio", "Puente Alto", "Renca", "San Bernardo", "San Carlos de Apoquindo", "San Joaquín", "Valparaiso", "Viña del Mar"]
   TmpDir = "#{Rails.root}/tmp/users"
@@ -63,16 +65,27 @@ class Usuario < ActiveRecord::Base
       book = Roo::Excelx.new(xlsTmp)
       sheet = book.sheet(0)
       columns = sheet.column(1)
+      section_index = (columns.rindex{|c| c =~ /Asignatura/} || 0)
+      asignatura = (sheet.cell(section_index + 1, 1) || '')
+      section = Seccion.create(
+        sigla: asignatura.split(' ')[1..3].try(:join),
+        nombre: asignatura.split(' ')[4..-1].try(:join, ' ')
+        )
       # Retreives the first column, after string "Nª" as table starting index
       initial_index = (columns.rindex{|c| c =~ /^N.$/} || 0) + 2
       # This extracts the index of the last field of the table with valid and non blank data
       last_index = (sheet.column(1).each_with_index.select{ |v,i| v.to_s.strip.blank? && i > initial_index }.first.last)
       # Iteration over the data table of Students
       initial_index.upto(last_index) do |row|
-        Usuario.create(
+        user = Usuario.create(
           rut: sheet.cell(row, 2).strip,
           nombre_completo: sheet.cell(row, 3).strip.titleize,
-          perfil: 'alumno'
+          perfil: 'alumno',
+          activo: true
+          )
+        SeccionUsuario.create(
+          usuario_id: user.id,
+          seccion_id: section.id
           )
       end
     rescue Exception => e
@@ -82,7 +95,7 @@ class Usuario < ActiveRecord::Base
   end
 
   def self.alumnos_for_select
-    self.where(perfil: 'alumno').uniq.order(:rut).map{ |a| [a.rut, a.id] }
+    self.con_perfil_alumno.uniq.order(:rut).map{ |a| [a.nombre_completo, a.id] }
   end
 
   private
