@@ -6,12 +6,12 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label 'Alumno(s)', :class => 'control-label' %>
     <div class="controls alumnos">
       <div class="alumnos-container">
         <div class="selectores">
+          <%= label_tag '', 'Secciones', class: 'control-label' %>
           <%= select_tag :secciones, options_for_select(@secciones),{class: 'form-control', prompt: 'Secciones'}  %>
-          <br>
+          <%= f.label 'Alumno(s)', class: 'control-label' %>
           <%= select_tag :alumnos, options_for_select([]), {class: 'form-control students-list', prompt: 'Seleccione alumno'} %>
           <br>
           <%= button_tag 'Agregar', class: 'btn btn-success add'%>
