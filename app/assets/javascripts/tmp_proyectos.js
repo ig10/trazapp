@@ -4,6 +4,7 @@ var TmpProyecto = (function(){
     addStudentTrigger();
     removeStudentTrigger();
     fakeLinksEvent();
+    submitHandler();
   }
 
   // Add & Remove Students from Select to List and inverse
@@ -130,6 +131,35 @@ var TmpProyecto = (function(){
     });
   }
 
+  function submitHandler() {
+    var form = $('.new-proyecto');
+    var buttonTrigger = $('#inscribir');
+    var selectors = $('select');
+    var hiddenVariable = $('#lista_alumnos').val();
+
+    buttonTrigger.on('click', function(e) {
+      e.preventDefault();
+      if ( hiddenVariable != "" || assignStudents() ){
+        selectors.attr('disabled',true);
+        form.submit();
+      } else {
+        // Implement Alert.js
+        selectors.attr('disabled',false);
+        console.log("ERROR");
+      }
+    });
+  }
+
+  function assignStudents() {
+    var dataContainers = $('.delete-student');
+    var hiddenVariable = $('#lista_alumnos');
+    var students = [];
+    $.each(dataContainers, function(i, e) {
+      students.push($(e).data('id'));
+    });
+    hiddenVariable.val(students);
+    return (hiddenVariable.val() != "");
+  }
 
 
   function profesor(){
