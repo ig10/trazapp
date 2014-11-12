@@ -1,4 +1,4 @@
-<%= form_for @tmp_proyecto, html: { method: 'POST', class: 'form-horizontal new-proyecto' } do |f| %>
+<%= form_for @tmp_proyecto, url:{action: 'create'}, html: { method: 'POST', class: 'form-horizontal new-proyecto' } do |f| %>
   <div class="control-group">
     <%= label_tag '', 'Nombre del proyecto', class: 'control-label' %>
     <div class="controls">
@@ -6,25 +6,29 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label 'Alumno(s)', :class => 'control-label' %>
     <div class="controls alumnos">
       <div class="alumnos-container">
         <div class="selectores">
+          <%= label_tag '', 'Secciones', class: 'control-label' %>
           <%= select_tag :secciones, options_for_select(@secciones),{class: 'form-control', prompt: 'Secciones'}  %>
-          <br>
+          <%= f.label 'Alumno(s)', class: 'control-label' %>
           <%= select_tag :alumnos, options_for_select([]), {class: 'form-control students-list', prompt: 'Seleccione alumno'} %>
           <br>
           <%= button_tag 'Agregar', class: 'btn btn-success add'%>
         </div>
-
         <div class="seleccionados">
           <div class="lista">
           </div>
+          <%= hidden_field_tag :lista_alumnos %>
         </div>
       </div>
+    </div>
+  </div>
 
-      <%= hidden_field_tag :alumnos_json, @alumnos %>
-
+  <div class="control-group">
+    <%= f.label :descripcion, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :descripcion, {class: 'form-control', rows: '3', maxlength: '350'} %>
     </div>
   </div>
 <% end %>

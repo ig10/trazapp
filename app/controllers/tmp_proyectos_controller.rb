@@ -39,25 +39,13 @@ class TmpProyectosController < ApplicationController
   end
 
   def create
-    proyecto = TmpProyecto.create({nombre: params[:tmp_proyecto][:nombre]})
-
-    if proyecto.id.present?
-      users = 1
-      until params["alumno_#{users}"].nil?
-        alumno = params["alumno_#{users}"].merge({proyecto_id: proyecto.id, perfil: 'alumno', activo: false})
-        users = (Usuario.create(alumno) ? users + 1 : 0)
-      end
-
-      actividades = 1
-      until params["actividad_#{actividades}"].nil?
-        actividad = params["actividad_#{actividades}"].merge({proyecto_id: proyecto.id})
-        actividades = (TmpActividad.create(actividad) ? actividades + 1 : 0)
-      end
-
-      render text: 'OK' #devolver codigo de acceso
+    proyecto = TmpProyecto.create(params[:tmp_proyecto])
+    lista = params[:lista_alumnos].split(',')
+    if proyecto.errors.empty?
+      alumnos = Usuario.where(id: lista).update_all(proyecto_id: proyecto.id)
+      redirect_to(action: 'show', id: proyecto.id)
     else
-      flash[:notice] = "ERROR!, No se pudo crear proyecto"
-      redirect_to action: 'new'
+      redirect_to(action: 'new')
     end
   end
 
