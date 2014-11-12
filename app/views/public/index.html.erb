@@ -2,29 +2,29 @@
 
   <div class="modal fade">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content login">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-          </button>
           <span class="logo">
             <%= image_tag 'logo.png' %>
           </span>
         </div>
         <div class="modal-body">
-          <p>Ingresar como: </p>
-          <p></p>
-          <p>
             <div class="well">
-              <a href="/profesor">
-                <button class="btn btn-large btn-block btn-info" type="button">Profesor</button>
-              </a>
-              <br>
-              <a href="/alumnos">
-                <button class="btn btn-large btn-block btn-info" type="button">Alumno</button>
-              </a>
+              <%= form_for @usuario, url: '/login', html: {role: 'form'} do |f| %>
+                <div class="form-group">
+                  <label for="login-username">Nombre de usuario</label>
+                  <%= f.text_field :correo_electronico, {class: 'form-control required', placeholder: 'Correo electrónico'} %>
+                </div>
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <%= f.password_field :password, {class: 'form-control required', placeholder: 'Password'} %>
+                </div>
+                <%= f.submit 'Inicia sesión', class: 'btn btn-default' %>
+                <br>
+                <br>
+                <%= link_to '¿Olvidaste tu contraseña?', '#', class: 'primary' %>
+              <% end %>
             </div>
-          </p>
         </div>
         <div class="modal-footer">
           Instituto Profesional Duoc UC
