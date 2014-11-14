@@ -8,7 +8,7 @@ gem 'rails', '3.2.13'
 gem 'pg'
 
 gem 'awesome_print'
-gem 'cancan', '~>1.5.1'
+gem 'cancancan', '~> 1.9'
 gem 'will_paginate'
 gem 'compass-rails'
 gem 'bootstrap-sass'
