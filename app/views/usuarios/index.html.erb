@@ -1,4 +1,5 @@
 <%- model_class = Usuario -%>
+
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
@@ -27,7 +28,7 @@
         <td><%= usuario.created_at.strftime("%d/%m/%Y") %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_usuario_path(usuario), :class => 'btn btn-mini' %>
+                      edit_usuario_path(usuario), :class => 'btn btn-xs btn-info' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       usuario_path(usuario),
                       :method => :delete,
