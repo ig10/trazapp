@@ -13,12 +13,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1
   # GET /usuarios/1.json
   def show
-    @usuario = Usuario.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @usuario }
-    end
+    redirect_to action: :index
   end
 
   # GET /usuarios/new
@@ -58,11 +53,14 @@ class UsuariosController < ApplicationController
   def update
     @usuario = Usuario.find(params[:id])
 
+
     respond_to do |format|
       if @usuario.update_attributes(params[:usuario])
-        format.html { redirect_to @usuario, notice: 'Usuario was successfully updated.' }
+        flash[:notice] = "Usuario #{@usuario.username} modificado exitosamente"
+        format.html { redirect_to action: :index }
         format.json { head :no_content }
       else
+        flash[:error] = "No se pudo modificar el usuario #{@usuario.username}"
         format.html { render action: "edit" }
         format.json { render json: @usuario.errors, status: :unprocessable_entity }
       end
@@ -73,9 +71,11 @@ class UsuariosController < ApplicationController
   # DELETE /usuarios/1.json
   def destroy
     @usuario = Usuario.find(params[:id])
+    username = @usuario.username
     @usuario.destroy
 
     respond_to do |format|
+      flash[:warning] = "Usuario #{username} eliminado exitosamente"
       format.html { redirect_to usuarios_url }
       format.json { head :no_content }
     end
