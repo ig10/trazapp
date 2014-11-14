@@ -5,10 +5,12 @@ Trazapp::Application.routes.draw do
   resources :usuarios
   resources :actividades
   resources :tareas
+  resources :sessions
 
-  root to: 'public#index'
+  root to: 'sessions#new'
 
   match '/alumnos' => 'tmp_proyectos#new'
+  match '/logout' => 'sessions#destroy'
 
 
   # Modify this routes considering new views in Teacher's admin Panel
@@ -18,7 +20,6 @@ Trazapp::Application.routes.draw do
   match '/activos' => 'proyectos#index'
   match '/reportes' => 'reportes#index'
   match '/reporte_general' => 'reportes#reporte_general'
-  match '/login' => 'public#login'
   # match '/configuraciones' => 'configuraciones#index'
   scope '/configuraciones', controller: 'configuraciones' do
     match '/', action: 'index'
