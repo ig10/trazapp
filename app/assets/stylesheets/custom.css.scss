@@ -19,6 +19,10 @@ html{
   }
 }
 
+.flash-message{
+  margin: 0 30%;
+}
+
 #title{
   font-size: 18px;
   color: rgb(65, 38, 37);
@@ -284,6 +288,13 @@ form.new-proyecto{
   }
 }
 
+.form-usuarios{
+  width: 40%;
+  input{
+    margin-bottom: 10px;
+  }
+}
+
 
 // Own Responsive styles
 @media screen and (max-width: 780px){
@@ -300,6 +311,11 @@ form.new-proyecto{
   div.tarea{
     height: initial;
   }
+
+  .form-usuarios{
+    width: 100%;
+  }
+
 }
 
 
@@ -364,6 +380,7 @@ form.new-proyecto{
 
     }
   }
+
 } /* min-width 641px, medium screens */
 
 //Login
