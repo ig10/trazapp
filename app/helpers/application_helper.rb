@@ -31,4 +31,31 @@ module ApplicationHelper
   def boolean_icon(bool)
     content_tag(:span, '', class: "glyphicon glyphicon-#{bool ? 'ok' : 'remove'}", style: "color: #{bool ? 'green' : 'red'}; text-align: center;")
   end
+
+  def flash_messages
+    # Refactorize this
+    if flash[:notice].present?
+      type = 'success'
+      main = "OK!"
+      msg = flash[:notice]
+    end
+
+    if flash[:error].present?
+      type = 'danger'
+      main = "Error!"
+      msg = flash[:error]
+    end
+
+    if flash[:warning].present?
+      type = 'warning'
+      main = "Atención!"
+      msg = flash[:warning]
+    end
+
+    raw("<div class='flash-message alert fade in out alert-#{type}'>
+      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+      <strong>#{main}</strong> #{msg}
+    </div>") if flash[:notice].present? || flash[:error].present? || flash[:warning].present?
+  end
+
 end
