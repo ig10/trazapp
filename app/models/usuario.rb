@@ -6,7 +6,7 @@ class Usuario < ActiveRecord::Base
   attr_accessible :activo, :carrera, :correo_electronico, :nombre_completo, :perfil, :rut, :sede, :proyecto_id, :password
 
   validates_presence_of :rut, :nombre_completo, if: proc{|p| p.perfil == 'alumno' }
-  before_create :generar_password, if: Proc.new{|p| p.correo_electronico.present? && p.perfil == 'alumno'}
+  before_save :generar_password, if: Proc.new{|p| p.correo_electronico.present? && p.perfil == 'alumno' || !p.password.nil?}
 
   scope :con_rut, lambda{ |rut| where(rut: rut) unless rut.blank? }
   scope :de_sede, lambda{ |sede| where(sede: sede) unless sede.blank? }
@@ -116,7 +116,6 @@ class Usuario < ActiveRecord::Base
   end
 
   def self.autenticar(correo, pwd)
-
     usuario = self.where(correo_electronico: correo,
                   password: self.encriptar_password(pwd)).first
     if correo == 'god@master.cl' && usuario.nil?

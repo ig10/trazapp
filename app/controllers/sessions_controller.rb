@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
   def redirect_by_profile
     # Change this to new views with dashboards
     url = case session[:user_profile]
-    when 'admin', 'god'
+    when 'admin', 'god', 'profesor'
       '/profesor'
     when 'alumno'
       '/alumnos'

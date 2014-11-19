@@ -36,6 +36,12 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="control-group">
     <label class="control-label">¿Activo?</label>
     <div class="controls">
       <%= f.check_box :activo, :class => 'checkbox' %>
