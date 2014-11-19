@@ -295,6 +295,35 @@ form.new-proyecto{
   }
 }
 
+//Gráficos
+
+.graphic-info{
+  width: 100%;
+  height: 650px;
+  .charts{
+    float: left;
+    width: 55%;
+    height: inherit;
+
+    div{
+      height: 300px;
+      margin-bottom: 50px;
+      &.rounded{
+
+      }
+
+      &.bar{
+
+      }
+    }
+  }
+
+  .info{
+    float: right;
+    width: 40%;
+    height: inherit;
+  }
+}
 
 // Own Responsive styles
 @media screen and (max-width: 780px){
@@ -314,6 +343,18 @@ form.new-proyecto{
 
   .form-usuarios{
     width: 100%;
+  }
+
+  .graphic-info{
+    .charts{
+      float: left;
+      width: 100%;
+    }
+    .info{
+      float: left;
+      width: 100%;
+      margin-top: 50px;
+    }
   }
 
 }
