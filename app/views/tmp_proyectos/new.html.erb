@@ -1,14 +1,11 @@
 <%- model_class = TmpProyecto -%>
 <div class="container">
-  <div class="alert hide fade in out alert-success">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <strong>OK</strong> Registros agregados exitosamente
-  </div>
   <div class="page-header">
     <h1>Inscribir Proyecto</h1>
   </div>
   <div class="forms_proyecto">
     <%= render partial: 'form' %>
+    <%= hidden_field_tag :alumnos_json, @alumnos %>
   </div>
 
   <div class="form-actions-override">
