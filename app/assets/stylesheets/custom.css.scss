@@ -19,6 +19,21 @@ html{
   }
 }
 
+form{
+  label.error{
+    color: #E80D0D;
+    font-size: 12px;
+  }
+  input.error{
+    border-color: #E80D0D;
+  }
+  .form-control:focus{
+    &.error{
+      @extend input.error;
+    }
+  }
+}
+
 .flash-message{
   margin: 0 30%;
 }
