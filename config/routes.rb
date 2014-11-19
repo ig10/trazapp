@@ -8,11 +8,10 @@ Trazapp::Application.routes.draw do
 
   root to: 'public#index'
 
-  match '/alumnos' => 'tmp_proyectos#new'
-
+  match '/alumnos' => 'alumnos#index'
 
   # Modify this routes considering new views in Teacher's admin Panel
-  match '/profesor' => 'tmp_proyectos#index'
+  match '/profesor' => 'profesores#index'
 
   match '/solicitudes' => 'tmp_proyectos#index'
   match '/activos' => 'proyectos#index'
