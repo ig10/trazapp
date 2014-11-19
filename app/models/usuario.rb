@@ -6,7 +6,8 @@ class Usuario < ActiveRecord::Base
   attr_accessible :activo, :carrera, :correo_electronico, :nombre_completo, :perfil, :rut, :sede, :proyecto_id, :password
 
   validates_presence_of :rut, :nombre_completo, if: proc{|p| p.perfil == 'alumno' }
-  before_save :generar_password, if: Proc.new{|p| p.correo_electronico.present? && p.perfil == 'alumno' || !p.password.nil?}
+  before_create :generar_password, if: Proc.new{|p| p.correo_electronico.present? && p.perfil == 'alumno'}
+  before_save :guardar_password, if: proc{ |p| p.password.present? }
 
   scope :con_rut, lambda{ |rut| where(rut: rut) unless rut.blank? }
   scope :de_sede, lambda{ |sede| where(sede: sede) unless sede.blank? }
@@ -111,27 +112,31 @@ class Usuario < ActiveRecord::Base
 
   # Authentification Stuff
 
-  def generar_password
-    self.password = Usuario.encriptar_password(self.rut)
-  end
-
   def self.autenticar(correo, pwd)
-    usuario = self.where(correo_electronico: correo,
-                  password: self.encriptar_password(pwd)).first
-    if correo == 'god@master.cl' && usuario.nil?
-      usuario = self.create(nombre_completo: 'Administrador Principal', correo_electronico: 'god@master.cl',
-                  password: Usuario.encriptar_password('godness'),
-                  perfil: 'god', activo: true)
-    end
-
+    usuario = self.where(correo_electronico: correo, password: self.encriptar_password(pwd)).first
+    usuario = self.create(
+                nombre_completo: 'Administrador Principal',
+                correo_electronico: 'god@master.cl',
+                password: Usuario.encriptar_password('godness'),
+                perfil: 'god', activo: true) if usuario.nil? && correo == 'god@master.cl'
     usuario
   end
 
-  def self.encriptar_password(rut)
-    Digest::SHA1.hexdigest(rut.split('-').first[-4..-1])
-  end
+  protected
+
+    def generar_password
+      self.password = Usuario.encriptar_password(self.rut.split('-').first[-4..-1]) if self.rut.present?
+    end
+
+    def guardar_password
+      self.password = Usuario.encriptar_password(self.password)
+    end
 
   private
+
+    def self.encriptar_password(pwd)
+      Digest::SHA1.hexdigest(pwd)
+    end
 
     def self.crear_fecha_busqueda(tipo, dia, mes, anio)
       concat = false
