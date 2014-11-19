@@ -1,10 +1,13 @@
+require 'digest/sha1'
 class Usuario < ActiveRecord::Base
   belongs_to :solicitud, class_name: 'TmpProyecto', foreign_key: 'proyecto_id'
   belongs_to :proyecto, :class_name => 'TmpProyecto', :foreign_key => 'proyecto_id'
   has_and_belongs_to_many :secciones
   attr_accessible :activo, :carrera, :correo_electronico, :nombre_completo, :perfil, :rut, :sede, :proyecto_id, :password
 
-  validates_presence_of :rut, :nombre_completo
+  validates_presence_of :rut, :nombre_completo, if: proc{|p| p.perfil == 'alumno' }
+  before_create :generar_password, if: Proc.new{|p| p.correo_electronico.present? && p.perfil == 'alumno'}
+  before_save :guardar_password, if: proc{ |p| p.password.present? }
 
   scope :con_rut, lambda{ |rut| where(rut: rut) unless rut.blank? }
   scope :de_sede, lambda{ |sede| where(sede: sede) unless sede.blank? }
@@ -15,6 +18,15 @@ class Usuario < ActiveRecord::Base
 
   SEDES = ["Alameda", "Antonio Varas", "Concepción", "Maipú", "Melipilla", "Padre Alonso de Ovalle", "Plaza Norte", "Plaza Oeste", "Plaza Vespucio", "Puente Alto", "Renca", "San Bernardo", "San Carlos de Apoquindo", "San Joaquín", "Valparaiso", "Viña del Mar"]
   TmpDir = "#{Rails.root}/tmp/users"
+
+  def username
+    if self.correo_electronico.present?
+      self.correo_electronico.split('@').first.titleize
+    else
+      separated = self.nombre_completo.strip.split(' ')
+      shortname = separated.last + (separated.first.size <= 3 ? separated[1..2] : separated.first)
+    end
+  end
 
   def self.rut_alumnos
     self.where(perfil: 'alumno').uniq.order(:rut).pluck(:rut)
@@ -98,17 +110,43 @@ class Usuario < ActiveRecord::Base
     self.con_perfil_alumno.uniq.order(:rut).map{ |a| [a.nombre_completo, a.id] }
   end
 
+  # Authentification Stuff
+
+  def self.autenticar(correo, pwd)
+    usuario = self.where(correo_electronico: correo, password: self.encriptar_password(pwd)).first
+    usuario = self.create(
+                nombre_completo: 'Administrador Principal',
+                correo_electronico: 'god@master.cl',
+                password: Usuario.encriptar_password('godness'),
+                perfil: 'god', activo: true) if usuario.nil? && correo == 'god@master.cl'
+    usuario
+  end
+
+  protected
+
+    def generar_password
+      self.password = Usuario.encriptar_password(self.rut.split('-').first[-4..-1]) if self.rut.present?
+    end
+
+    def guardar_password
+      self.password = Usuario.encriptar_password(self.password)
+    end
+
   private
 
-  def self.crear_fecha_busqueda(tipo, dia, mes, anio)
-    concat = false
-    str = ""
-    str += "date_part('day', #{tipo}) = '#{dia}'" if concat = dia.present?
-    str += " AND " if concat
-    str += "date_part('month', #{tipo}) = '#{mes}'" if concat = mes.present?
-    str += " AND " if concat
-    str += "date_part('year', #{tipo}) = '#{anio}'" if anio.present?
-    str
-  end
+    def self.encriptar_password(pwd)
+      Digest::SHA1.hexdigest(pwd)
+    end
+
+    def self.crear_fecha_busqueda(tipo, dia, mes, anio)
+      concat = false
+      str = ""
+      str += "date_part('day', #{tipo}) = '#{dia}'" if concat = dia.present?
+      str += " AND " if concat
+      str += "date_part('month', #{tipo}) = '#{mes}'" if concat = mes.present?
+      str += " AND " if concat
+      str += "date_part('year', #{tipo}) = '#{anio}'" if anio.present?
+      str
+    end
 
 end

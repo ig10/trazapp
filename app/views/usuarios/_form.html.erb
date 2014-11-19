@@ -1,44 +1,50 @@
-<%= form_for @usuario, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @usuario, :html => { class: 'form-horizontal' } do |f| %>
   <div class="control-group">
     <%= f.label :rut, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :rut, :class => 'text_field' %>
+      <%= f.text_field :rut, :class => 'form-control' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :nombre_completo, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :nombre_completo, :class => 'text_field' %>
+      <%= f.text_field :nombre_completo, :class => 'form-control' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :correo_electronico, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :correo_electronico, :class => 'text_field' %>
+      <%= f.text_field :correo_electronico, :class => 'form-control' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :perfil, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :perfil, :class => 'text_field' %>
+      <%= f.text_field :perfil, :class => 'form-control' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :sede, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :sede, :class => 'text_field' %>
+      <%= f.text_field :sede, :class => 'form-control' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :carrera, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :carrera, :class => 'text_field' %>
+      <%= f.text_field :carrera, :class => 'form-control' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :activo, :class => 'control-label' %>
+    <%= f.label :password, :class => 'control-label' %>
     <div class="controls">
-      <%= f.check_box :activo, :class => 'check_box' %>
+      <%= f.password_field :password, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">¿Activo?</label>
+    <div class="controls">
+      <%= f.check_box :activo, :class => 'checkbox' %>
     </div>
   </div>
 
