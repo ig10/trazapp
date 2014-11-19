@@ -6,6 +6,11 @@ var App = (function(){
       backdrop: 'static'
     });
     $('.modal').modal('show');
+    formsValidator();
+  }
+
+  function formsValidator() {
+    $('form').validate();
   }
 
   function formulario_remoto(){
@@ -25,6 +30,7 @@ var App = (function(){
 
   return {
     init: init,
-    formulario_remoto: formulario_remoto
+    formulario_remoto: formulario_remoto,
+    formsValidator: formsValidator
   };
 })();
