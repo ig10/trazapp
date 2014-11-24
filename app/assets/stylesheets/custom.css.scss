@@ -26,6 +26,8 @@ form{
   label.error{
     color: #E80D0D;
     font-size: 12px;
+    position: absolute;
+    margin-top: -7px;
   }
   input.error{
     border-color: #E80D0D;
