@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
             <div class="well">
-              <%= form_tag sessions_path, {role: 'form'} do |f| %>
+              <%= form_tag '/login', {role: 'form'} do |f| %>
                 <div class="form-group">
                   <label for="login-username">Nombre de usuario</label>
                   <%= text_field_tag :correo_electronico, params[:correo_electronico], {class: 'form-control required', placeholder: 'Correo electrónico'} %>
