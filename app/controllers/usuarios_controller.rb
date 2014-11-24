@@ -1,4 +1,6 @@
 class UsuariosController < ApplicationController
+  load_and_authorize_resource
+
   # GET /usuarios
   # GET /usuarios.json
   def index
@@ -30,6 +32,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1/edit
   def edit
     @usuario = Usuario.find(params[:id])
+    authorize! :edit, @usuario
   end
 
   # POST /usuarios
