@@ -2,20 +2,20 @@
   <h3>Actividades</h3>
   <div id="listado_tareas">
     <div class="row listado_tareas">
-      <div class="tarea header <%= cycle('odd', 'even') -%>">
-        <span class="col-md-1"> <strong>#</strong></span>
-        <span class="col-md-2"> <strong>Módulo</strong></span>
-        <span class="col-md-3"> <strong>Progreso</strong></span>
-        <span class="col-md-5"> <strong>Acciones</strong></span>
-        </div>
     <% if Array(@actividades).any? %>
       <% @actividades.each_with_index do |actividad, i| %>
+        <div class="tarea header <%= cycle('odd', 'even') %> <%= 'description-header' if i > 0 %> <%= 'last-child' if i == @actividades.length-1 %>">
+          <div class="columns col-md-1"> <strong>#</strong></div>
+          <div class="columns col-md-2"> <strong>Módulo</strong></div>
+          <div class="columns col-md-3"> <strong>Progreso</strong></div>
+          <div class="columns col-md-5"> <strong>Acciones</strong></div>
+        </div>
         <div class="tarea <%= cycle('odd', 'even') -%>">
-          <span class="col-md-1"> <%= i+1 %> </span>
-          <span class="col-md-2">
+          <div class="columns col-md-1"> <%= i+1 %> </div>
+          <div class="columns col-md-2">
             <%= label_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %>
-          </span>
-          <span class="col-md-3">
+          </div>
+          <div class="columns col-md-3">
             <div class="form-group">
             <div class="progress">
               <% act = @proyecto.progreso[:completo]%>
@@ -24,12 +24,12 @@
               </div>
             </div>
           </div>
-          </span>
-          <span class="col-md-5">
-            <%= link_to "Ver/Editar", url_to_actividad(actividad), {class: "btn btn-mini"} %>
+          </div>
+          <div class="columns col-md-5">
+            <%= link_to "Ver/Editar", url_to_actividad(actividad), {class: "btn btn-mini btn-info"} %>
             <%= link_to 'Eliminar', url_to_actividad(actividad, '/eliminar') , data: { confirm: '¿Estás seguro?'},
                         class: 'btn btn-mini btn-danger' %>
-          </span>
+          </div>
         </div>
       <% end %>
     <% else %>
