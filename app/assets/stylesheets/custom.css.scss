@@ -209,9 +209,17 @@ form{
 }
 
 div.tarea{
-  padding-top: 5px;
-  height: 30px;
+  height: 40px;
   text-align: center;
+  position: relative;
+  padding: 10px;
+  &.description-header{
+    display: none;
+  }
+  div.columns{
+    position: relative;
+    height: 100%;
+  }
   &.odd{
     background-color: #f5f5f5;
   }
@@ -341,6 +349,62 @@ form.new-proyecto{
 }
 
 // Own Responsive styles
+
+@media screen and (max-width: 1000px){
+  .contenedor_interno{
+    padding: 0 30px;
+  }
+
+  .listado_tareas{
+    border: 1px solid gray;
+    .tarea{
+      float: right;
+      width: 70%;
+      height: 100%;
+      border-bottom: 1px solid gray;
+      div.columns{
+        float: right;
+        width: 100%;
+        text-align: left;
+        height: 40px;
+        padding: 10px;
+        .checkbox{
+          margin-left: 0;
+        }
+        &:last-child{
+          height: 50px;
+        }
+      }
+      &:last-child{
+        border-bottom: none;
+      }
+      &.header{
+        float: left;
+        width: 30%;
+        height: 100%;
+        clear: both;
+        border-bottom: 1px solid gray;
+        border-right: 5px solid rgb(178, 176, 184);
+        &.description-header{
+          display: inline-block;
+        }
+        &.last-child{
+          border-bottom: none;
+        }
+        div{
+          float: left;
+          width: 100%;
+          text-align: center;
+          &:last-child{
+            height: 50px;
+          }
+        }
+      }
+
+    }
+  }
+}
+
 @media screen and (max-width: 780px){
   .actividades{
     height: initial;
@@ -399,44 +463,6 @@ form.new-proyecto{
       }
     }
   }
-  .contenedor_interno{
-    padding: 0 30px;
-  }
-  .listado_tareas{
-    .tarea{
-      float: right;
-      width: 70%;
-      border: 1px solid gray;
-      span{
-        float: right;
-        width: 100%;
-        text-align: left;
-        &:last-child{
-          height: 37px;
-        }
-        .checkbox{
-          margin-left: 0;
-        }
-      }
-
-
-      &.header{
-        float: left;
-        width: 30%;
-        border: 1px solid gray;
-        span{
-          float: left;
-          width: 100%;
-          text-align: left;
-          &:last-child{
-            height: 40px;
-          }
-        }
-      }
-
-    }
-  }
-
 } /* min-width 641px, medium screens */
 
 //Login
