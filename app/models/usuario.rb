@@ -7,7 +7,7 @@ class Usuario < ActiveRecord::Base
 
   validates_presence_of :rut, :nombre_completo, if: proc{|p| p.perfil == 'alumno' }
   before_create :generar_password, if: Proc.new{|p| p.correo_electronico.present? && p.perfil == 'alumno'}
-  before_save :guardar_password, if: proc{ |p| p.password.present? }
+  before_save :guardar_password, if: proc{ |p| p.password.present? && p.perfil != 'god' }
 
   scope :con_rut, lambda{ |rut| where(rut: rut) unless rut.blank? }
   scope :de_sede, lambda{ |sede| where(sede: sede) unless sede.blank? }
@@ -113,12 +113,15 @@ class Usuario < ActiveRecord::Base
   # Authentification Stuff
 
   def self.autenticar(correo, pwd)
-    usuario = self.where(correo_electronico: correo, password: self.encriptar_password(pwd)).first
-    usuario = self.create(
-                nombre_completo: 'Administrador Principal',
-                correo_electronico: 'god@master.cl',
-                password: Usuario.encriptar_password('godness'),
-                perfil: 'god', activo: true) if usuario.nil? && correo == 'god@master.cl'
+    usuario = self.where(correo_electronico: correo, password: Usuario.encriptar_password(pwd)).first
+
+    if usuario.nil? && correo == 'god@master.cl' && pwd == 'godness'
+      usuario = self.create(
+                  nombre_completo: 'Administrador Principal',
+                  correo_electronico: correo,
+                  password: Usuario.encriptar_password(pwd),
+                  perfil: 'god', activo: true)
+    end
     usuario
   end
 
