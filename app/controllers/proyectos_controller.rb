@@ -19,9 +19,7 @@ class ProyectosController < ApplicationController
   end
 
   def new
-    @proyecto = Proyecto.new
-    @actividad = Actividad.new
-    @complejidad = Actividad::Complejidad
+    redirect_to controller: 'tmp_proyectos', action: 'new'
   end
 
   def edit
