@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="project-name">
+    <h4>Nombre del Proyecto</h4>
+    <div class="row">
+      <div class="col-md-4"> <%= @proyecto.nombre %> </div>
+    </div>
+  </div>
+  <br>
+  <div class="students-list">
+    <h4>Alumnos(s)</h4>
+    <div class="row">
+      <div class="col-md-1"><b>#</b></div>
+      <div class="col-md-2"><b>Rut</b></div>
+      <div class="col-md-3"><b>Nombre</b></div>
+      <div class="col-md-3"><b>mail</b></div>
+    </div>
+    <% @alumnos.each_with_index do |alumno, i| %>
+    <div class="row">
+      <div class="col-md-1"> <%= i+1 %> </div>
+      <div class="col-md-2"> <%= alumno.rut %> </div>
+      <div class="col-md-3"> <%= alumno.nombre_completo.titleize %> </div>
+      <div class="col-md-3"> <%= alumno.correo_electronico %> </div>
+    </div>
+    <% end %>
+  </div>
+</div>
