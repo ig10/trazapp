@@ -26,7 +26,7 @@
         <td><%= tmp_proyecto.codigo_acceso %></td>
         <% if tmp_proyecto.estado.eql?('aprobado')%>
           <td>
-            <%= link_to "Editar", '#', {class: "btn btn-xs disabled"} %>
+            <%= link_to "Editar", '#', {class: "btn btn-xs btn-primary disabled"} %>
             <%= link_to 'Eliminar', "/solicitud/eliminar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}" ,
                         data: {confirm: '¿Estás seguro?'}, class: 'btn btn-xs btn-danger' %>
             <%= link_to "Aprobar", '#', {class: "btn btn-xs btn-success disabled"} %>
@@ -36,7 +36,7 @@
           <td><%= check_box_tag "chk_proyecto_#{index}", tmp_proyecto.id, false, {disabled: true ,class: 'checkbox centered'} %></td>
         <% else %>
           <td>
-            <%= link_to "Editar", "/solicitud/editar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}", {class: "btn btn-xs"} %>
+            <%= link_to "Editar", "/solicitud/editar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}", {class: "btn btn-xs btn-primary"} %>
             <%= link_to 'Eliminar', "/solicitud/eliminar/#{tmp_proyecto.id}/#{tmp_proyecto.codigo_acceso}" ,
                         data: {confirm: '¿Estás seguro?'}, class: 'btn btn-xs btn-danger' %>
             <%= link_to "Aprobar", '#', {'data-id' => tmp_proyecto.id, class: "btn btn-xs btn-success aprobar"} %>
