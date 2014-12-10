@@ -68,7 +68,7 @@ class Usuario < ActiveRecord::Base
     end
   end
 
-  def self.load_students(tmpfile)
+  def self.load(tmpfile)
     FileUtils.mkdir_p TmpDir unless File.directory?(TmpDir)
     xlsTmp = "#{TmpDir}/students.xlsx"
     results = {error: false, msg: 'OK'}
