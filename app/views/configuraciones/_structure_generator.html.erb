@@ -1,0 +1,9 @@
+<h4>Cargar Estructura de Evaluación</h4>
+<div class="grouped-elements upload-container">
+  <%= form_tag({action: 'load_structure'}, multipart: true) do %>
+    <%= text_field_tag :nombre, '', {class: 'structure-name form-control', placeholder: 'Nombre de Estructura'} %>
+    <br>
+    <%= file_field_tag :structure_file, class: 'filestyle' %>
+    <%= submit_tag 'Cargar', class: 'btn btn-info button-load'%>
+  <% end %>
+</div>

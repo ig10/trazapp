@@ -18,6 +18,7 @@ gem 'jquery-ui-rails'
 gem 'axlsx'
 gem 'roo'
 gem 'activerecord-postgres-hstore'
+gem 'nested-hstore'
 gem 'highcharts-rails', '~> 3.0.0'
 gem 'lazy_high_charts'
 

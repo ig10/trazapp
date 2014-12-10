@@ -3,6 +3,9 @@
 
 html{
   height: 100%;
+  input[type='file']{
+    padding-left: 2px;
+  }
 }
 
 #home{
@@ -333,6 +336,33 @@ form.new-proyecto{
   }
 }
 
+// Uploads
+
+.upload-container{
+  border: 1px #CCC solid; padding: 10px;
+  width: 50%;
+  .structure-name{
+    width: 50%;
+  }
+}
+
+// History
+
+.history-container{
+  border: 1px solid gray;
+  padding: 5px;
+  width: 30%;
+  margin-bottom: 10px;
+  &.incomplete{
+    background-color: #F58484;
+    color: white;
+  }
+  &.complete{
+    background-color: #72B07C;
+    color: white;
+  }
+}
+
 // Own Responsive styles
 
 @media screen and (max-width: 1000px){
@@ -388,6 +418,14 @@ form.new-proyecto{
 
     }
   }
+
+  .upload-container{
+    width: 100%;
+    .structure-name{
+      width: 100%;
+    }
+  }
+
 }
 
 @media screen and (max-width: 780px){
