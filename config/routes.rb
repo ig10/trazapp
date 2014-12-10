@@ -22,6 +22,7 @@ Trazapp::Application.routes.draw do
   scope '/configuraciones', controller: 'configuraciones' do
     match '/', action: 'index'
     post '/load_students', action: 'load_students'
+    post '/load_structure', action: 'load_structure'
   end
 
   match '/tmp_proyectos' => 'tmp_proyectos#create'
