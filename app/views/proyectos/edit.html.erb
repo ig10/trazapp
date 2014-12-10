@@ -1,20 +1,13 @@
-<%- model_class = Proyecto -%>
 <div class="row-fluid">
-  <div class="alert hide fade in out alert-success">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <strong>OK</strong> Registros modificados exitosamente
-  </div>
   <div class="page-header">
     <h1>Seguimiento de Proyecto</h1>
   </div>
   <div class="forms_proyecto">
-    <%= render partial: 'form' %>
+    <%= render partial: 'project_info' %>
   </div>
     <%= render partial: 'form_actividad2' %>
   <div class="form-actions-override">
-    <button id="inscribir" type="button" class="btn btn-primary">Terminar</button>
-    <%= link_to t('.cancel', :default => 'Cancelar'),
-                proyectos_path, :class => 'btn' %>
+    <button type="button" class="btn btn-primary">Volver</button>
   </div>
 </div>
 
