@@ -122,6 +122,10 @@ class Usuario < ActiveRecord::Base
     usuario
   end
 
+  def admin?
+    %w(admin profesor).include?(self.perfil)
+  end
+
   protected
 
     def generar_password
