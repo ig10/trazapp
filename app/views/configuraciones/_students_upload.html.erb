@@ -1,0 +1,7 @@
+<h4>Cargar Alumnos</h4>
+<div class="grouped-elements upload-container">
+  <%= form_tag({action: 'load_students'}, multipart: true) do %>
+    <%= file_field_tag :load_excel, class: 'filestyle' %>
+    <%= submit_tag 'Cargar', class: 'btn btn-info button-load'%>
+  <% end %>
+</div>
