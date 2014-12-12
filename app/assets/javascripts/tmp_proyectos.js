@@ -5,13 +5,14 @@ var TmpProyecto = (function(){
     removeStudentTrigger();
     fakeLinksEvent();
     submitHandler();
+    aproveProject();
   }
 
   // Add & Remove Students from Select to List and inverse
 
   function sectionsListener() {
     // Controls change in sections to load students in selector
-    $('#secciones').on('change', function() {
+    $('#tmp_proyecto_seccion_sigla').on('change', function() {
       loadStudents($(this).val());
       cleanListBox();
     });
@@ -64,7 +65,7 @@ var TmpProyecto = (function(){
   function searchStudent(id) {
     // Retreives an Array of the specific student
     var json = JSON.parse($('#alumnos_json').val());
-    var selected = json[$('#secciones').val()];
+    var selected = json[$('#tmp_proyecto_seccion_sigla').val()];
     var found;
     $.each(selected, function(i, e) {
       if(e[0] == id){
@@ -134,7 +135,7 @@ var TmpProyecto = (function(){
   function submitHandler() {
     var form = $('.new-proyecto');
     var buttonTrigger = $('#inscribir');
-    var selectors = $('select');
+    var selectors = $('.students-list');
     var hiddenVariable = $('#lista_alumnos').val();
 
     buttonTrigger.on('click', function(e) {
@@ -159,6 +160,28 @@ var TmpProyecto = (function(){
     });
     hiddenVariable.val(students);
     return (hiddenVariable.val() != "");
+  }
+
+  function aproveProject() {
+    var button = $('a.aprobar');
+    var form = $('form.new-proyecto');
+    button.on('click', function(e) {
+      e.preventDefault();
+      saveOldUrl(form.attr('action'));
+      form.attr('action', button.attr('href'));
+      form.submit();
+    });
+  }
+
+  function saveOldUrl(str) {
+    var button = $('#inscribir');
+    var form = $('form.new-proyecto');
+    button.attr('data-url', str);
+    button.unbind('click');
+    button.on('click', function(e) {
+      form.attr('action', button.data('url'));
+      submitHandler();
+    });
   }
 
 

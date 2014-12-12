@@ -1,5 +1,5 @@
 <h3>Reportes</h3>
-<%= form_tag({action: 'reporte_general'} ,{method: 'post', id: "reporte_general"}) do %>
+<%= form_tag('/reporte-general', {method: 'post', id: "reporte_general"}) do |f| %>
   <table>
     <tr>
       <td>Rut de Alumno: </td>

@@ -10,9 +10,7 @@
       <th>Estado</th>
       <th>Fecha creación</th>
       <th>Fecha cierre</th>
-      <th>Código</th>
       <th>Acciones</th>
-      <th>Selección</th>
     </tr>
   </thead>
   <tbody>
@@ -20,18 +18,13 @@
       <tr>
         <td><%= index+1 %></td>
         <td><%= proyecto.nombre %></td>
-        <td><%= proyecto.estado %></td>
+        <td><%= proyecto_estado(proyecto.estado) %></td>
         <td><%= proyecto.created_at.strftime('%d/%m/%Y - %H:%M:%S') %></td>
         <td><%= proyecto.fecha_cierre.strftime('%d/%m/%Y') %></td>
-        <td><%= proyecto.codigo_acceso %></td>
         <td>
-          <%= link_to "Ver/Editar", "/proyecto/editar/#{proyecto.id}/#{proyecto.codigo_acceso}", {class: "btn btn-xs btn-primary"} %>
-          <%= link_to 'Eliminar', "/proyecto/eliminar/#{proyecto.id}/#{proyecto.codigo_acceso}" , data: { confirm: '¿Estás seguro?'},
-                      class: 'btn btn-xs btn-danger' %>
-          |
-          <%= link_to "Enviar Código", "/enviar-codigo", {class: "btn btn-xs btn-info"} %>
+          <%= link_to "Ver/Editar", editar_proyecto_path(proyecto.id), {class: "btn btn-primary"} %>
+          <%= link_to 'Eliminar', eliminar_proyecto_path(proyecto.id) , data: { confirm: '¿Estás seguro?'}, class: 'btn btn-danger' %>
         </td>
-        <td><%= check_box_tag "chk_proyecto_#{index}", proyecto.id, false, {class: 'checkbox centered'} %></td>
       </tr>
     <% end %>
   </tbody>
@@ -39,18 +32,6 @@
 
 <div class="well well-small pull-right">
   <%= link_to 'Nuevo', '/proyecto/nuevo', :class => 'btn btn-primary' %>
-
-  <div class="btn-group">
-    <div class="btn-group">
-      <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown">
-        Seleccionados <span class="badge cant_proyectos">0</span>
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a href="#"><span class="icon-remove"></span> Eliminar</a></li>
-      </ul>
-    </div>
-  </div>
 </div>
 
 <script>

@@ -6,14 +6,14 @@
       <% @actividades.each_with_index do |actividad, i| %>
         <div class="tarea header <%= cycle('odd', 'even') %> <%= 'description-header' if i > 0 %> <%= 'last-child' if i == @actividades.length-1 %>">
           <div class="columns col-md-1"> <strong>#</strong></div>
-          <div class="columns col-md-2"> <strong>Módulo</strong></div>
+          <div class="columns col-md-2"> <strong>Nombre</strong></div>
           <div class="columns col-md-3"> <strong>Progreso</strong></div>
           <div class="columns col-md-5"> <strong>Acciones</strong></div>
         </div>
         <div class="tarea <%= cycle('odd', 'even') -%>">
           <div class="columns col-md-1"> <%= i+1 %> </div>
           <div class="columns col-md-2">
-            <%= label_tag "actividad_#{i+1}[modulo]", actividad.modulo, {class: 'text_field'} %>
+            <%= label_tag "actividad_#{i+1}[nombre]", actividad.nombre, {class: 'text_field'} %>
           </div>
           <div class="columns col-md-3">
             <div class="form-group">
@@ -26,7 +26,7 @@
           </div>
           </div>
           <div class="columns col-md-5">
-            <%= link_to "Ver/Editar", url_to_actividad(actividad), {class: "btn btn-xs btn-info"} %>
+            <%= link_to "Ver/Editar", editar_actividad_path(actividad.id), {class: "btn btn-xs btn-info"} %>
             <%= link_to 'Eliminar', url_to_actividad(actividad, '/eliminar') , data: { confirm: '¿Estás seguro?'},
                         class: 'btn btn-xs btn-danger' %>
           </div>

@@ -1,5 +1,4 @@
 class ConfiguracionesController < ApplicationController
-  layout 'application'
 
   def index
     @secciones = Seccion.for_select

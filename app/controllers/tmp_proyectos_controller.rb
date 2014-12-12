@@ -1,6 +1,7 @@
 class TmpProyectosController < ApplicationController
+
   def index
-    @tmp_proyectos = TmpProyecto.all
+    @tmp_proyectos = TmpProyecto.order('created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -19,38 +20,33 @@ class TmpProyectosController < ApplicationController
 
   def new
     @tmp_proyecto = TmpProyecto.new
-    @tmp_actividad = TmpActividad.new
-    @alumnos = Seccion.to_hash.to_json
-    @secciones = JSON.parse(@alumnos).keys
-    render :new, layout: 'alumno'
+    variables_comunes
   end
 
   def edit
     @tmp_proyecto = TmpProyecto.find(params[:id])
-    if @tmp_proyecto and @tmp_proyecto.codigo_acceso.eql?(params[:codigo_acceso])
-      @actividades = @tmp_proyecto.actividades
-      @alumnos = @tmp_proyecto.alumnos
-      @complejidad = TmpActividad::Complejidad
-      render :edit, layout: 'alumno' #validar session para layout
+    if @tmp_proyecto
+      variables_comunes
+      @estructuras = Estructura.for_select
+      @seccion = @tmp_proyecto.seccion
+      @alumnos_solicitud = @tmp_proyecto.alumnos
+      @alumnos_seccion = (@seccion.usuarios - @alumnos_solicitud).map{|a| [a.nombre_completo, a.id]}
+      render :edit
     else
       flash[:error] = "Proyecto no encontrado"
-      redirect_to '/solicitudes'
+      redirect_to solicitudes_url
     end
   end
 
   def create
-    proyecto = TmpProyecto.create(params[:tmp_proyecto])
-    lista = params[:lista_alumnos].split(',')
-    if proyecto.errors.empty?
-      alumnos = Usuario.where(id: lista).update_all(proyecto_id: proyecto.id)
-      redirect_to(action: 'show', id: proyecto.id)
-    else
-      redirect_to(action: 'new')
-    end
+    @solicitud = TmpProyecto.create(params[:tmp_proyecto])
+    guardar_solicitud
   end
 
   def update
-    render text: "UPDATE!\n#{params.inspect}"
+    @solicitud = TmpProyecto.find(params[:id])
+    @solicitud.update_attributes(params[:tmp_proyecto])
+    guardar_solicitud
   end
 
   def destroy
@@ -64,34 +60,63 @@ class TmpProyectosController < ApplicationController
   end
 
   def aprobar
-    #Funcion pasarla a worker cuando se implemente
-    tmpProyecto = TmpProyecto.find(params[:id])
-    if tmpProyecto.codigo_acceso.eql?(params[:codigo_acceso])
-      proyecto = Proyecto.find_or_create_by_nombre(tmpProyecto.nombre)
-
-      tmpProyecto.alumnos.each do |alumno|
-        alumno.update_attributes({proyecto_id: proyecto.id, activo: true})
-      end
-
-      actividades = 0
-      if proyecto.alumnos.any? and proyecto.actividades.empty?
-        tmpProyecto.actividades.each do |tmp_act|
-          act = Actividad.new
-          act.proyecto = proyecto
-          act.modulo = tmp_act.modulo
-          act.funcionalidad = tmp_act.funcionalidad
-          act.complejidad = tmp_act.complejidad
-          act.estado = 'incompleta'
-          act.revision = tmp_act.revision
-          act.progreso = 0.0
-          actividades += 1 if act.save
+    if request.post?
+      proyecto = Proyecto.create(params[:tmp_proyecto])
+      if proyecto.errors.empty?
+        actividades = Estructura.find(params[:id]).json
+        actividades.each do |key|
+          if actividades[key].is_a?(String)
+            Actividad.create(
+              proyecto_id: proyecto.id,
+              nombre: key,
+              puntos: actividades[key].to_i,
+              progreso: 0
+              )
+          else
+            actividad = Actividad.create(
+              proyecto_id: proyecto.id,
+              nombre: key,
+              puntos: 0,
+              progreso: 0
+              )
+            actividades[key].keys.each do |tarea_key|
+              Tarea.create(
+                actividad_id: actividad.id,
+                nombre: tarea_key,
+                puntos: actividades[key][tarea_key]
+                )
+            end
+          end
         end
-        tmpProyecto.update_attribute(:estado,'aprobado') if actividades > 0
+        flash[:notice] = "Proyecto #{proyecto.nombre} activado exitosamente"
+        redirect_to proyectos_url
+      else
+        flash[:error] = "Error al aprobar/crear nuevo Proyecto"
+        redirect_to solicitudes_url
       end
-      render text: tmpProyecto.estado.eql?('aprobado') ? "OK" : "ERROR"
     else
-      render text: "ERROR AL ENCONTRAR PROYECTO"
+      redirect_to editar_solicitud_url(params[:id])
     end
   end
+
+  private
+
+    def variables_comunes
+      @alumnos = Seccion.to_hash.to_json
+      @secciones = JSON.parse(@alumnos).keys
+      @alumnos_seccion = []
+      @alumnos_solicitud = []
+    end
+
+    def guardar_solicitud
+      lista = params[:lista_alumnos].split(',')
+      if @solicitud.errors.empty?
+        @solicitud.alumnos = Usuario.where(id: lista)
+        redirect_to(action: 'show', id: @solicitud.id)
+      else
+        flash[:error] = "Los datos fueron ingresados Incorrectamente"
+        redirect_to(action: 'new')
+      end
+    end
 
 end

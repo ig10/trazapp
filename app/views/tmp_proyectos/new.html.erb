@@ -4,14 +4,12 @@
     <h1>Inscribir Proyecto</h1>
   </div>
   <div class="forms_proyecto">
-    <%= render partial: 'form' %>
-    <%= hidden_field_tag :alumnos_json, @alumnos %>
+    <%= render partial: 'form', locals: {action: crear_solicitud_path, editar: false} %>
   </div>
 
   <div class="form-actions-override">
     <button id="inscribir" type="button" class="btn btn-primary">Inscribir</button>
-    <%= link_to t('.cancel', :default => 'Cancelar'),
-                tmp_proyectos_path, :class => 'btn' %>
+    <%= link_to 'Cancelar', solicitudes_path, class: 'btn btn-danger' %>
   </div>
 </div>
 

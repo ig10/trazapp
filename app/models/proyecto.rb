@@ -1,5 +1,5 @@
 class Proyecto < ActiveRecord::Base
-  has_many :alumnos, class_name: 'Usuario'
+  has_and_belongs_to_many :alumnos, class_name: 'Usuario', foreign_key: 'proyecto_id'
   has_many :actividades, class_name: 'Actividad'
   has_one :estructura, class_name: 'Estructura', foreign_key: 'id'
 

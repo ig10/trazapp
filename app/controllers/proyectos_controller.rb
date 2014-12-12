@@ -1,5 +1,4 @@
 class ProyectosController < ApplicationController
-  layout 'application'
   def index
     @proyectos = Proyecto.all
 
@@ -24,7 +23,7 @@ class ProyectosController < ApplicationController
 
   def edit
     @proyecto = Proyecto.find(params[:id])
-    if @proyecto and @proyecto.codigo_acceso.eql?(params[:codigo_acceso])
+    if @proyecto
       @actividades = @proyecto.actividades
       @alumnos = @proyecto.alumnos
       @complejidad = Actividad::Complejidad

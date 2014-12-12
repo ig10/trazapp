@@ -1,10 +1,16 @@
 class ActividadesController < ApplicationController
-  layout 'application'
 
   def index
     @actividad = Actividad.find(params[:actividad])
     @tareas = @actividad.tareas
     @complejidad = Actividad::Complejidad
+  end
+
+  def edit
+    @actividad = Actividad.find(params[:id])
+    @tareas = @actividad.tareas
+    @complejidad = Actividad::Complejidad
+    render 'index'
   end
 
   def destroy

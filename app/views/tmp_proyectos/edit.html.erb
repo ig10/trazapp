@@ -5,16 +5,18 @@
     <strong>OK</strong> Registros modificados exitosamente
   </div>
   <div class="page-header">
-    <h1>Editar Proyecto</h1>
+    <h1>Modificar Solicitud #<%= @tmp_proyecto.id %></h1>
   </div>
   <div class="forms_proyecto">
-    <%= render partial: 'form' %>
+    <%= render partial: 'form', locals: {action: modificar_solicitud_path, editar: true} %>
   </div>
 
   <div class="form-actions-override">
-    <button id="inscribir" type="button" class="btn btn-primary">Editar</button>
-    <%= link_to t('.cancel', :default => 'Cancelar'),
-                tmp_proyectos_path, :class => 'btn' %>
+    <button id="inscribir" type="button" class="btn btn-primary">Guardar</button>
+    <% if can? :aprobar, TmpProyecto %>
+      <%= link_to 'Aprobar', aprobar_solicitud_path(@tmp_proyecto.id), {class: 'btn btn-success aprobar'} %>
+    <% end %>
+    <%= link_to "Cancelar", solicitudes_path, class: 'btn btn-danger' %>
   </div>
 </div>
 

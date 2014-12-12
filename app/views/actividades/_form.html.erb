@@ -1,12 +1,7 @@
 <%= form_for @actividad, html: { method: 'POST', class: 'form-horizontal actividad', role: 'form'} do |f| %>
   <div class="form-group">
-    <%= label_tag :modulo,'Módulo', class: '' %>
-    <%= f.text_field :modulo, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= label_tag :funcionalidad,'Nombre/Funcionalidad', class: '' %>
-    <%= f.text_field :funcionalidad, class: 'form-control' %>
+    <%= label_tag :nombre,'Nombre', class: '' %>
+    <%= f.text_field :nombre, class: 'form-control' %>
   </div>
 
   <div class="form-group">

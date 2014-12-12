@@ -12,6 +12,7 @@ class Ability
 
   def admin
     can :manage, :all
+    can :aprobar, TmpProyecto
   end
 
   def profesor
@@ -21,6 +22,7 @@ class Ability
 
   def alumno
     cannot :manage, :all
+    cannot :aprobar, TmpProyecto
     can :edit, Usuario, id: @usuario.id
   end
 
