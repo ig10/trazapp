@@ -1,8 +1,9 @@
 require 'digest/sha1'
 class Usuario < ActiveRecord::Base
-  belongs_to :solicitud, class_name: 'TmpProyecto', foreign_key: 'proyecto_id'
-  belongs_to :proyecto, :class_name => 'TmpProyecto', :foreign_key => 'proyecto_id'
+  has_and_belongs_to_many :tmp_proyectos
+  has_and_belongs_to_many :proyectos
   has_and_belongs_to_many :secciones
+  belongs_to :configuracion, dependent: :destroy
   attr_accessible :activo, :carrera, :correo_electronico, :nombre_completo, :perfil, :rut, :sede, :proyecto_id, :password
 
   validates_presence_of :rut, :nombre_completo, if: proc{|p| p.perfil == 'alumno' }
@@ -34,38 +35,38 @@ class Usuario < ActiveRecord::Base
 
   def self.reporte_alumnos(params)
     alumnos = self.
-               joins(:proyecto).
+               joins(:proyectos).
                con_rut(params["rut"]).
                de_sede(params["sede"]).
                con_estado(params["estado"]).
                creado_el(crear_fecha_busqueda('tmp_proyectos.created_at', params['inicio_dia'], params['inicio_mes'], params['inicio_anio'])).
                con_cierre_el(crear_fecha_busqueda('fecha_expiracion', params['cierre_dia'], params['cierre_mes'], params['cierre_anio']))
+    return alumnos
+    # if alumnos.any?
+    #   package = Axlsx::Package.new
+    #   book = package.workbook
+    #   sheet = book.add_worksheet(name: "Reporte Alumnos")
+    #   sheet.add_row(["Rut","Nombre Completo", "Correo Electrónico", "Sede", "Carrera", "¿Activo?", "Proyecto", "Nombre", "Estado", "Cantidad Actividades", "Evaluacion", "Fecha Cierre" ])
+    #   alumnos.each do |alumno|
+    #     sheet.add_row([
+    #       alumno.rut,
+    #       alumno.nombre_completo,
+    #       alumno.correo_electronico,
+    #       alumno.sede,
+    #       alumno.carrera,
+    #       alumno.activo ? "Si" : "No",
+    #       ">>",
+    #       alumno.proyecto.nombre,
+    #       alumno.proyecto.estado,
+    #       alumno.proyecto.cantidad_actividades,
+    #       alumno.proyecto.evaluacion,
+    #       alumno.proyecto.fecha_expiracion
+    #     ])
+    #   end
 
-    if alumnos.any?
-      package = Axlsx::Package.new
-      book = package.workbook
-      sheet = book.add_worksheet(name: "Reporte Alumnos")
-      sheet.add_row(["Rut","Nombre Completo", "Correo Electrónico", "Sede", "Carrera", "¿Activo?", "Proyecto", "Nombre", "Estado", "Cantidad Actividades", "Evaluacion", "Fecha Cierre" ])
-      alumnos.each do |alumno|
-        sheet.add_row([
-          alumno.rut,
-          alumno.nombre_completo,
-          alumno.correo_electronico,
-          alumno.sede,
-          alumno.carrera,
-          alumno.activo ? "Si" : "No",
-          ">>",
-          alumno.proyecto.nombre,
-          alumno.proyecto.estado,
-          alumno.proyecto.cantidad_actividades,
-          alumno.proyecto.evaluacion,
-          alumno.proyecto.fecha_expiracion
-        ])
-      end
+    #  return package
 
-     return package
-
-    end
+    # end
   end
 
   def self.load(tmpfile)
@@ -126,7 +127,7 @@ class Usuario < ActiveRecord::Base
   end
 
   def admin?
-    %w(admin profesor).include?(self.perfil)
+    %w(god admin profesor).include?(self.perfil)
   end
 
   protected

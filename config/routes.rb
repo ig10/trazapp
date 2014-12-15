@@ -9,48 +9,52 @@ Trazapp::Application.routes.draw do
   root to: redirect('/login')
 
   scope controller: 'sessions' do
-    get '/login', action: 'new'
+    get '/login', action: 'new', as: :login
     post '/login', action: 'create'
-    match '/logout', action: 'destroy'
+    match '/logout', action: 'destroy', as: :logout
   end
 
   match '/alumnos' => 'alumnos#index'
   match '/profesor' => 'profesores#index'
 
-  match '/solicitudes' => 'tmp_proyectos#index'
-  match '/activos' => 'proyectos#index'
+  match '/solicitudes' => 'tmp_proyectos#index', as: :solicitudes
+  match '/proyectos' => 'proyectos#index', as: :proyectos
 
 
-  match '/reportes' => 'reportes#index'
-  match '/reporte_general' => 'reportes#reporte_general'
+  match '/reportes' => 'reportes#index', as: :reportes
+  match '/reporte-general' => 'reportes#reporte_general'
 
   scope '/configuraciones', controller: 'configuraciones' do
-    match '/', action: 'index'
+    match '/', action: 'index', as: :configuraciones
     post '/load_students', action: 'load_students'
     post '/load_structure', action: 'load_structure'
   end
 
-  match '/tmp_proyectos' => 'tmp_proyectos#create'
-  match '/tmp_proyectos/:id' => 'tmp_proyectos#update'
+  # match '/tmp_proyectos' => 'tmp_proyectos#create'
+  # match '/tmp_proyectos/:id' => 'tmp_proyectos#update'
 
   scope 'solicitud', controller: 'tmp_proyectos' do
-    match 'nuevo', action: 'new'
-    match 'editar/:id/:codigo_acceso', action: 'edit'
-    match 'eliminar/:id/:codigo_acceso', action: 'destroy'
-    match 'aprobar/:id/:codigo_acceso', action: 'aprobar'
+    match 'nueva', action: 'new', as: :nueva_solicitud
+    match 'crear', action: 'create', as: :crear_solicitud
+    match 'editar/:id', action: 'edit', as: :editar_solicitud
+    match 'eliminar/:id', action: 'destroy', as: :eliminar_solicitud
+    post 'modificar/:id', action: 'update', as: :modificar_solicitud
+    match 'aprobar/:id', action: 'aprobar', as: :aprobar_solicitud
   end
 
   scope 'proyecto', controller: 'proyectos' do
     match 'nuevo', action: 'new'
-    match 'editar/:id/:codigo_acceso', action: 'edit'
-    match 'eliminar/:id/:codigo_acceso', action: 'destroy'
+    match 'editar/:id', action: 'edit', as: :editar_proyecto
+    match 'eliminar/:id', action: 'destroy', as: :eliminar_proyecto
     scope 'actividad', controller: 'actividades' do
-      match ':id/:codigo_acceso/:actividad', action: 'index'
-      match 'eliminar/:id/:codigo_acceso/:actividad', action: 'destroy'
-      match ':id/:codigo_acceso/nueva-tarea/:actividad', action: 'nueva_tarea'
+      post 'evaluar/:id', action: 'evaluar', as: :evaluar_actividad
+      match ':id/:actividad', action: 'index'
+      match 'eliminar/:id/:actividad', action: 'destroy'
+      match ':id/nueva-tarea/:actividad', action: 'nueva_tarea'
     end
   end
 
-  #Enviar Mail Codigo Acceso
-  match '/enviar-codigo' => 'application#enviar_codigo'
+  scope 'actividad', controller: 'actividades' do
+    match 'editar/:id', action: 'edit', as: :editar_actividad
+  end
 end

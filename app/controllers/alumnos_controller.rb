@@ -1,6 +1,4 @@
 class AlumnosController < ApplicationController
-  layout 'alumno'
-
   def index
 
       @chart = LazyHighCharts::HighChart.new('graph') do |f|

@@ -1,14 +1,30 @@
+<%= content_for :name, 'Seguimiento de Proyecto' %>
+<%= content_for :description, "Número ##{@proyecto.id}" %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard / <i class="fa fa-fw fa-file"></i> Proyectos / <i class="fa fa-fw fa-align-left"></i> Seguimiento') %>
+
 <div class="row-fluid">
-  <div class="page-header">
-    <h1>Seguimiento de Proyecto</h1>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-info-circle"></i> Información General</h3>
+    </div>
+    <div class="panel-body">
+        <%= render partial: 'project_info' %>
+    </div>
   </div>
-  <div class="forms_proyecto">
-    <%= render partial: 'project_info' %>
+
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-tasks"></i> Actividades</h3>
+    </div>
+    <div class="panel-body">
+      <%= render partial: 'form_actividad2' %>
+    </div>
   </div>
-    <%= render partial: 'form_actividad2' %>
-  <div class="form-actions-override">
-    <button type="button" class="btn btn-primary">Volver</button>
+
+  <div class="well well-small pull-left">
+    <%= link_to 'Volver', proyectos_url, :class => 'btn btn-primary' %>
   </div>
+
 </div>
 
 <script type="text/javascript">

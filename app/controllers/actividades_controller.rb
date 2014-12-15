@@ -1,10 +1,17 @@
 class ActividadesController < ApplicationController
-  layout 'application'
 
   def index
     @actividad = Actividad.find(params[:actividad])
     @tareas = @actividad.tareas
     @complejidad = Actividad::Complejidad
+  end
+
+  def edit
+    @actividad = Actividad.find(params[:id])
+    @tareas = @actividad.tareas
+    @estados = Actividad::ESTADOS
+    @complejidad = Actividad::Complejidad
+    render 'index'
   end
 
   def destroy
@@ -14,6 +21,15 @@ class ActividadesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to "/proyecto/editar/#{params[:id]}/#{params[:codigo_acceso]}" }
       format.json { head :no_content }
+    end
+  end
+
+  def evaluar
+    actividad = Actividad.find(params[:id])
+    if actividad.update_attributes(params[:actividad])
+      redirect_to editar_proyecto_path(id: actividad.proyecto.id)
+    else
+      redirect_to proyectos_path
     end
   end
 

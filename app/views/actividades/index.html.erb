@@ -1,7 +1,8 @@
+<%= content_for :name, 'Gestionar Actividad' %>
+<%= content_for :description, "Número ##{@actividad.id}" %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard / <i class="fa fa-fw fa-file"></i> Proyectos / <i class="fa fa-fw fa-align-left"></i> Seguimiento / <i class="fa fa-fw fa-thumb-tack"></i> Actividad') %>
+
 <div class="row-fluid">
-  <div class="page-header">
-    <h1>Gestionar Actividad</h1>
-  </div>
   <div class="forms_proyecto">
     <%= render partial: 'form' %>
   </div>
@@ -13,15 +14,10 @@
       </div>
     <% else %>
       <div class="alert alert-info">
-        <i><b> No hay ninguna Tarea creada </b></i>
+        <i><b> No hay Tareas asociadas a esta Actividad </b></i>
       </div>
     <% end %>
     <br>
-    <button id="agregar_tarea" type="button" class="btn btn-success" data-id="<%= @actividad.id %>">
-      <i class="icon-plus"></i> Agregar
-    </button>
-    <div id="form_tarea">
-    </div>
   </div>
 
   <div class="form-actions-override">

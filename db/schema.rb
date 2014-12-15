@@ -11,18 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141205001419) do
+ActiveRecord::Schema.define(:version => 20141215191227) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "proyecto_id"
-    t.string   "modulo"
-    t.string   "funcionalidad"
-    t.integer  "complejidad"
+    t.string   "nombre"
     t.string   "estado"
     t.date     "revision"
     t.float    "progreso"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "puntos",      :default => 0
+    t.float    "evaluacion",  :default => 0.0
   end
 
   create_table "configuraciones", :force => true do |t|
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20141205001419) do
   create_table "estructuras", :force => true do |t|
     t.string "nombre"
     t.hstore "json"
+    t.text   "data"
   end
 
   create_table "proyectos", :force => true do |t|
@@ -46,7 +47,17 @@ ActiveRecord::Schema.define(:version => 20141205001419) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.integer  "estructura_id"
+    t.integer  "seccion_id"
+    t.text     "descripcion"
   end
+
+  create_table "proyectos_usuarios", :id => false, :force => true do |t|
+    t.integer "proyecto_id"
+    t.integer "usuario_id"
+  end
+
+  add_index "proyectos_usuarios", ["proyecto_id"], :name => "index_proyectos_usuarios_on_proyecto_id"
+  add_index "proyectos_usuarios", ["usuario_id"], :name => "index_proyectos_usuarios_on_usuario_id"
 
   create_table "secciones", :force => true do |t|
     t.string   "nombre"
@@ -64,6 +75,14 @@ ActiveRecord::Schema.define(:version => 20141205001419) do
   add_index "secciones_usuarios", ["seccion_id"], :name => "index_secciones_usuarios_on_seccion_id"
   add_index "secciones_usuarios", ["usuario_id"], :name => "index_secciones_usuarios_on_usuario_id"
 
+  create_table "solicitudes_usuarios", :id => false, :force => true do |t|
+    t.integer "solicitud_id"
+    t.integer "usuario_id"
+  end
+
+  add_index "solicitudes_usuarios", ["solicitud_id"], :name => "index_solicitudes_usuarios_on_solicitud_id"
+  add_index "solicitudes_usuarios", ["usuario_id"], :name => "index_solicitudes_usuarios_on_usuario_id"
+
   create_table "tareas", :force => true do |t|
     t.integer  "actividad_id"
     t.text     "descripcion"
@@ -72,6 +91,8 @@ ActiveRecord::Schema.define(:version => 20141205001419) do
     t.float    "evaluacion",   :default => 0.0
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "puntos",       :default => 0
+    t.string   "nombre"
   end
 
   create_table "tmp_actividades", :force => true do |t|
@@ -93,13 +114,21 @@ ActiveRecord::Schema.define(:version => 20141205001419) do
     t.date     "fecha_expiracion"
     t.date     "expire_date"
     t.text     "descripcion"
+    t.integer  "seccion_id"
   end
+
+  create_table "tmp_proyectos_usuarios", :id => false, :force => true do |t|
+    t.integer "tmp_proyecto_id"
+    t.integer "usuario_id"
+  end
+
+  add_index "tmp_proyectos_usuarios", ["tmp_proyecto_id"], :name => "index_tmp_proyectos_usuarios_on_tmp_proyecto_id"
+  add_index "tmp_proyectos_usuarios", ["usuario_id"], :name => "index_tmp_proyectos_usuarios_on_usuario_id"
 
   create_table "usuarios", :force => true do |t|
     t.string   "rut"
     t.string   "nombre_completo"
     t.string   "correo_electronico"
-    t.integer  "proyecto_id"
     t.string   "perfil"
     t.string   "sede"
     t.string   "carrera"

@@ -1,13 +1,18 @@
 class TmpProyecto < ActiveRecord::Base
-  has_many :alumnos, :class_name => 'Usuario', :foreign_key => 'proyecto_id'
-  has_many :actividades, :class_name => 'TmpActividad', :foreign_key => 'proyecto_id'
-  belongs_to :seccion, class_name: 'Seccion', foreign_key: 'seccion_id'
-  attr_accessible :estado, :nombre, :descripcion
+  belongs_to :seccion
+  has_and_belongs_to_many :alumnos, class_name: 'Usuario', foreign_key: 'tmp_proyecto_id'
+
+  attr_accessible :estado, :nombre, :descripcion, :seccion_id, :seccion_sigla, :estructura_id
   delegate :rut, :nombre_completo, :correo_electronico, to: :alumnos
 
-  validates_presence_of :nombre, :descripcion
+  attr_accessor :estructura_id
 
-  before_save :formatear_nombre, :expirar
+  validates_presence_of :nombre, :descripcion, :seccion
+
+  before_create :expirar
+  before_save :formatear_nombre
+
+  ESTADOS = %w(aprobado pendiente rechazado)
 
   def formatear_nombre
     self.nombre = self.nombre.titleize
@@ -27,7 +32,32 @@ class TmpProyecto < ActiveRecord::Base
   end
 
   def expirar
-    fecha_expiracion = Time.now + 15.days
+    self.fecha_expiracion = Time.now + 15.days
+  end
+
+  def asignar_seccion
+    unless self.seccion_sigla.nil?
+      self.seccion = Seccion.where(sigla: seccion_sigla).first
+    end
+  end
+
+  def seccion_sigla
+    if self.seccion.present?
+      self.seccion.sigla
+    else
+      @seccion_sigla
+    end
+  end
+
+  def seccion_sigla=(sigla)
+    unless sigla.nil?
+      self.seccion = Seccion.where(sigla: sigla).first
+      @seccion_sigla = sigla
+    end
+  end
+
+  def pendiente?
+    self.estado == 'pendiente'
   end
 
 end

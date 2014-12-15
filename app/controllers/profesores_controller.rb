@@ -23,7 +23,6 @@ class ProfesoresController < ApplicationController
         ]
       }
       f.series(series)
-      f.options[:title][:text] = "Estado Proyectos"
       f.legend( :layout=> 'vertical')
       f.plot_options(:pie=>{
         :allowPointSelect=>true,

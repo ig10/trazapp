@@ -334,8 +334,8 @@ form.new-proyecto{
     height: inherit;
 
     div{
-      height: 300px;
-      margin-bottom: 50px;
+      // height: 300px;
+      // margin-bottom: 50px;
       &.rounded{
 
       }
@@ -391,6 +391,10 @@ form.new-proyecto{
       }
     }
   }
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #F0F0F0;
 }
 
 // Own Responsive styles

@@ -1,8 +1,8 @@
 <%- model_class = Usuario -%>
+<%= content_for :name, 'Usuarios' %>
+<%= content_for :description, 'Listado completo' %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard / <i class="fa fa-fw fa fa-user"></i> Usuarios') %>
 
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
 <table class="table table-striped usuarios">
   <thead>
     <tr>
@@ -40,4 +40,7 @@
   </tbody>
 </table>
 
-<%= link_to 'Nuevo', new_usuario_path, :class => 'btn btn-primary' %>
+<div class="well well-small pull-right">
+  <%= link_to 'Nuevo', new_usuario_path, :class => 'btn btn-primary' %>
+</div>
+

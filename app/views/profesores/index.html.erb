@@ -1,17 +1,82 @@
+<%= content_for :name, 'Dashboard' %>
+<%= content_for :description, 'Información General' %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard') %>
+
 <div class="graphic-info">
-  <div class="charts">
-    <div class="rounded">
-      <%= high_chart("pie_div", @chart_p) %>
+  <div class="col-lg-7">
+    <div class="row">
+      <div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Proyectos de Título</h3>
+          </div>
+          <div class="panel-body">
+            <%= high_chart("bar_div", @chart_c) %>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="bar">
-      <%= high_chart("bar_div", @chart_c) %>
+    <div class="row">
+      <div class="">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Estado Proyecto</h3>
+          </div>
+          <div class="panel-body">
+           <%= high_chart("pie_div", @chart_p) %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="info">
+  <div class="info row">
     <div>
-      <p><%= high_chart("col_div", @chart_l) %></p>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Actividades Recientes</h3>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <span class="badge">ahora</span>
+                        <i class="fa fa-fw fa-calendar"></i> Calendar updated
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">hace 4 minutos</span>
+                        <i class="fa fa-fw fa-comment"></i> Commented on a post
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">hace 23 minutos</span>
+                        <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">hace 46 minutos</span>
+                        <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">hace 1 hora</span>
+                        <i class="fa fa-fw fa-user"></i> Usuarios cargados
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">hace 2 horas</span>
+                        <i class="fa fa-fw fa-check"></i> Tarea completada: "Proyecto #14"
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">ayer</span>
+                        <i class="fa fa-fw fa-globe"></i> Saved the world
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <span class="badge">dos días atrás</span>
+                        <i class="fa fa-fw fa-check"></i> Tarea completada: "Proyecto #08"
+                    </a>
+                </div>
+                <div class="text-right">
+                    <a href="#">Ver todas las Actividades recientes <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 
