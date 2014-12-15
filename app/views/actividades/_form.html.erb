@@ -1,4 +1,4 @@
-<%= form_for @actividad, html: { method: 'POST', class: 'form-horizontal actividad', role: 'form'} do |f| %>
+<%= form_for @actividad, url: evaluar_actividad_path, html: { method: 'POST', class: 'form-horizontal actividad', role: 'form'} do |f| %>
   <div class="form-group">
     <%= label_tag :nombre,'Nombre', class: '' %>
     <%= f.text_field :nombre, class: 'form-control' %>
@@ -6,22 +6,27 @@
 
   <div class="form-group">
     <%= label_tag :estado,'Estado', class: '' %>
-    <%= f.text_field :estado, class: 'form-control' %>
+    <%= f.select :estado, options_for_select(@estados, @actividad.estado),{},{class: 'form-control'} %>
   </div>
 
   <div class="form-group">
     <%= label_tag :revision,'Revisión', class: '' %>
     <div class='dates'>
-      <span>
+      <span style="width: 80px;">
         <%= f.select :revision, options_for_select(1..31, @actividad.revision.day),{},{class: 'form-control'} %>
       </span>
-      <span>
+      <span style="width: 130px;">
         <%= f.select :revision, options_for_select(meses_helper, @actividad.revision.month),{},{class: 'form-control'} %>
       </span>
-      <span>
+      <span style="width: 90px;">
         <%= f.select :revision, options_for_select(anio_helper, @actividad.revision.year),{},{class: 'form-control'} %>
       </span>
     </div>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :evaluacion,'Evaluacion', class: '' %>
+    <%= f.text_field :evaluacion, class: 'form-control' %>
   </div>
 
   <div class="form-group">
@@ -34,7 +39,6 @@
     </div>
   </div>
 
-
-
+  <%= f.submit 'Evaluar', :class => 'btn btn-success' %>
 
 <% end %>

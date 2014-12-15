@@ -35,38 +35,38 @@ class Usuario < ActiveRecord::Base
 
   def self.reporte_alumnos(params)
     alumnos = self.
-               joins(:proyecto).
+               joins(:proyectos).
                con_rut(params["rut"]).
                de_sede(params["sede"]).
                con_estado(params["estado"]).
                creado_el(crear_fecha_busqueda('tmp_proyectos.created_at', params['inicio_dia'], params['inicio_mes'], params['inicio_anio'])).
                con_cierre_el(crear_fecha_busqueda('fecha_expiracion', params['cierre_dia'], params['cierre_mes'], params['cierre_anio']))
+    return alumnos
+    # if alumnos.any?
+    #   package = Axlsx::Package.new
+    #   book = package.workbook
+    #   sheet = book.add_worksheet(name: "Reporte Alumnos")
+    #   sheet.add_row(["Rut","Nombre Completo", "Correo Electrónico", "Sede", "Carrera", "¿Activo?", "Proyecto", "Nombre", "Estado", "Cantidad Actividades", "Evaluacion", "Fecha Cierre" ])
+    #   alumnos.each do |alumno|
+    #     sheet.add_row([
+    #       alumno.rut,
+    #       alumno.nombre_completo,
+    #       alumno.correo_electronico,
+    #       alumno.sede,
+    #       alumno.carrera,
+    #       alumno.activo ? "Si" : "No",
+    #       ">>",
+    #       alumno.proyecto.nombre,
+    #       alumno.proyecto.estado,
+    #       alumno.proyecto.cantidad_actividades,
+    #       alumno.proyecto.evaluacion,
+    #       alumno.proyecto.fecha_expiracion
+    #     ])
+    #   end
 
-    if alumnos.any?
-      package = Axlsx::Package.new
-      book = package.workbook
-      sheet = book.add_worksheet(name: "Reporte Alumnos")
-      sheet.add_row(["Rut","Nombre Completo", "Correo Electrónico", "Sede", "Carrera", "¿Activo?", "Proyecto", "Nombre", "Estado", "Cantidad Actividades", "Evaluacion", "Fecha Cierre" ])
-      alumnos.each do |alumno|
-        sheet.add_row([
-          alumno.rut,
-          alumno.nombre_completo,
-          alumno.correo_electronico,
-          alumno.sede,
-          alumno.carrera,
-          alumno.activo ? "Si" : "No",
-          ">>",
-          alumno.proyecto.nombre,
-          alumno.proyecto.estado,
-          alumno.proyecto.cantidad_actividades,
-          alumno.proyecto.evaluacion,
-          alumno.proyecto.fecha_expiracion
-        ])
-      end
+    #  return package
 
-     return package
-
-    end
+    # end
   end
 
   def self.load(tmpfile)

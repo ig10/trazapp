@@ -1,7 +1,7 @@
 <div class="row listado_tareas">
   <div class="tarea header <%= cycle('odd', 'even') -%>">
     <span class="col-md-1"> <strong>#</strong> </span>
-    <span class="col-md-2"> <strong>Descripción</strong> </span>
+    <span class="col-md-5"> <strong>Nombre</strong> </span>
     <span class="col-md-2"> <strong>Revisión</strong> </span>
     <span class="col-md-2"> <strong>Evaluación</strong> </span>
     <span class="col-md-2"> <strong>¿Completa?</strong> </span>
@@ -10,10 +10,9 @@
   <% @tareas.each_with_index do |tarea, index| %>
     <div class="tarea <%= cycle('odd', 'even') -%>">
       <span class="col-md-1"> <%= index+1 %> </span>
-      <span class="col-md-2"> <%= tarea.descripcion %> </span>
+      <span class="col-md-5"> <%= tarea.nombre %> </span>
       <span class="col-md-2"> <%= tarea.revision.strftime("%d/%m/%Y") %> </span>
       <span class="col-md-2 editable"> <%= tarea.evaluacion %> </span>
-      <span class="col-md-2"> <%= check_box_tag "chk_tarea_#{index}", tarea.id, tarea.completa?, {class: 'checkbox'} %> </span>
       <span class="col-md-2">
         <button type="button" class="btn btn-mini btn-success btn-evaluar" data-id="<%= tarea.id %>" disabled>Evaluar</button>
       </span>

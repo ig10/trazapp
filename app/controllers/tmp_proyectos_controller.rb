@@ -63,29 +63,40 @@ class TmpProyectosController < ApplicationController
     if request.post?
       proyecto = Proyecto.create(params[:tmp_proyecto])
       if proyecto.errors.empty?
-        actividades = Estructura.find(params[:id]).json
-        actividades.each do |key|
+        lista = params[:lista_alumnos].split(',')
+        proyecto.alumnos = Usuario.where(id: lista)
+        actividades = proyecto.estructura.json
+        actividades.keys.each do |key|
           if actividades[key].is_a?(String)
             Actividad.create(
               proyecto_id: proyecto.id,
               nombre: key,
               puntos: actividades[key].to_i,
-              progreso: 0
+              progreso: 0,
+              estado: 'incompleta',
+              revision: Time.now + 1.month
               )
           else
+            puntos = 0
             actividad = Actividad.create(
               proyecto_id: proyecto.id,
               nombre: key,
-              puntos: 0,
-              progreso: 0
+              puntos: puntos,
+              progreso: 0,
+              estado: 'incompleta',
+              revision: Time.now + 1.month
               )
             actividades[key].keys.each do |tarea_key|
               Tarea.create(
                 actividad_id: actividad.id,
                 nombre: tarea_key,
-                puntos: actividades[key][tarea_key]
+                puntos: actividades[key][tarea_key].to_i,
+                estado: 'incompleta',
+                revision: Time.now + 1.month
                 )
+              puntos += actividades[key][tarea_key].to_i
             end
+            actividad.update_attribute(:puntos, puntos)
           end
         end
         flash[:notice] = "Proyecto #{proyecto.nombre} activado exitosamente"

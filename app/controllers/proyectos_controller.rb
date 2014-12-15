@@ -1,6 +1,6 @@
 class ProyectosController < ApplicationController
   def index
-    @proyectos = Proyecto.all
+    @proyectos = Proyecto.order('created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +24,7 @@ class ProyectosController < ApplicationController
   def edit
     @proyecto = Proyecto.find(params[:id])
     if @proyecto
-      @actividades = @proyecto.actividades
+      @actividades = @proyecto.actividades.order('created_at DESC')
       @alumnos = @proyecto.alumnos
       @complejidad = Actividad::Complejidad
     else

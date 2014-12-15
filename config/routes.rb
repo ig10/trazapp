@@ -18,7 +18,7 @@ Trazapp::Application.routes.draw do
   match '/profesor' => 'profesores#index'
 
   match '/solicitudes' => 'tmp_proyectos#index', as: :solicitudes
-  match '/activos' => 'proyectos#index', as: :proyectos
+  match '/proyectos' => 'proyectos#index', as: :proyectos
 
 
   match '/reportes' => 'reportes#index', as: :reportes
@@ -47,6 +47,7 @@ Trazapp::Application.routes.draw do
     match 'editar/:id', action: 'edit', as: :editar_proyecto
     match 'eliminar/:id', action: 'destroy', as: :eliminar_proyecto
     scope 'actividad', controller: 'actividades' do
+      post 'evaluar/:id', action: 'evaluar', as: :evaluar_actividad
       match ':id/:actividad', action: 'index'
       match 'eliminar/:id/:actividad', action: 'destroy'
       match ':id/nueva-tarea/:actividad', action: 'nueva_tarea'

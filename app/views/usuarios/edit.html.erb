@@ -1,7 +1,10 @@
 <%- model_class = Usuario -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
-</div>
+
+<%= content_for :name, 'Editar Perfil' %>
+<%= content_for :description, "#{@usuario.username}" %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard / <i class="fa fa-fw fa fa-user"></i> Usuarios / <i class="fa fa-fw fa fa-edit"></i> Editar Perfil') %>
+
 <div class="form-usuarios">
   <%= render :partial => 'form' %>
 </div>
+

@@ -1,11 +1,12 @@
 <%- model_class = TmpProyecto -%>
+<%= content_for :name, "Modificar Solicitud" %>
+<%= content_for :description, "Número ##{@tmp_proyecto.id}" %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard / <i class="fa fa-fw fa-edit"></i> Solicitudes / <i class="fa fa-fw fa-file"></i> Resultado ') %>
+
 <div class="container">
   <div class="alert hide fade in out alert-success">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <strong>OK</strong> Registros modificados exitosamente
-  </div>
-  <div class="page-header">
-    <h1>Modificar Solicitud #<%= @tmp_proyecto.id %></h1>
   </div>
   <div class="forms_proyecto">
     <%= render partial: 'form', locals: {action: modificar_solicitud_path, editar: true} %>
@@ -13,7 +14,7 @@
 
   <div class="form-actions-override">
     <button id="inscribir" type="button" class="btn btn-primary">Guardar</button>
-    <% if can? :aprobar, TmpProyecto %>
+    <% if (can? :aprobar, TmpProyecto) && @tmp_proyecto.pendiente? %>
       <%= link_to 'Aprobar', aprobar_solicitud_path(@tmp_proyecto.id), {class: 'btn btn-success aprobar'} %>
     <% end %>
     <%= link_to "Cancelar", solicitudes_path, class: 'btn btn-danger' %>

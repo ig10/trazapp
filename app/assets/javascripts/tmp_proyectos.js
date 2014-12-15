@@ -168,6 +168,7 @@ var TmpProyecto = (function(){
     button.on('click', function(e) {
       e.preventDefault();
       saveOldUrl(form.attr('action'));
+      assignStudents();
       form.attr('action', button.attr('href'));
       form.submit();
     });

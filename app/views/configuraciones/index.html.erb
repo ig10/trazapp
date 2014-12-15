@@ -1,4 +1,6 @@
-<h3>Configuraciones</h3>
+<%= content_for :name, 'Configuraciones' %>
+<%= content_for :description, 'Carga de archivos' %>
+<%= content_for :breadcrumbs, raw('<i class="fa fa-fw fa-dashboard"></i> Dashboard / <i class="fa fa-fw fa-wrench"></i> Configuraciones ') %>
 
 <div class="container-fluid">
   <%= render partial: 'students_upload' %>

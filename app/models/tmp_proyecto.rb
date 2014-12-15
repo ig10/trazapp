@@ -2,10 +2,10 @@ class TmpProyecto < ActiveRecord::Base
   belongs_to :seccion
   has_and_belongs_to_many :alumnos, class_name: 'Usuario', foreign_key: 'tmp_proyecto_id'
 
-  attr_accessible :estado, :nombre, :descripcion, :seccion_id, :seccion_sigla, :estructura
+  attr_accessible :estado, :nombre, :descripcion, :seccion_id, :seccion_sigla, :estructura_id
   delegate :rut, :nombre_completo, :correo_electronico, to: :alumnos
 
-  attr_accessor :estructura
+  attr_accessor :estructura_id
 
   validates_presence_of :nombre, :descripcion, :seccion
 
@@ -54,6 +54,10 @@ class TmpProyecto < ActiveRecord::Base
       self.seccion = Seccion.where(sigla: sigla).first
       @seccion_sigla = sigla
     end
+  end
+
+  def pendiente?
+    self.estado == 'pendiente'
   end
 
 end
